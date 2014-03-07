@@ -83,8 +83,7 @@ namespace Integrate
         // Renders the scene into the viewport
         private void Viewport_Paint(object sender, PaintEventArgs e)
         {
-            Font f = new Font(FontFamily.GenericSansSerif, 18.0f);
-            
+
 
             GL.ClearColor(Color4.CornflowerBlue);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
