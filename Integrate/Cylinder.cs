@@ -15,10 +15,6 @@ namespace Integrate
         // List of vertices that describe the circle
         Vector3d[] Vertices = new Vector3d[2 * nVertices];
 
-        // Option flags
-        bool DrawTrunkOutlines = true;
-        bool DrawCapOutlines = true;
-
         // attached to property below
         private Color4 _Color = Color4.DarkSeaGreen;
         public Color4 Color
@@ -37,7 +33,7 @@ namespace Integrate
         {
             // Probably won't happen but just to remind myself (catastrophically)
             if (nVertices % 2 != 0) throw new IndexOutOfRangeException("nVertices must be a multiple of 2");
-            if (nVertices > 256) DrawTrunkOutlines = false;
+            if (nVertices > 256) { OptionBank.DrawCapLines = false; OptionBank.DrawTrunkLines = false; }
 
 
             // Set all the vertices to the 'center' of the circle
@@ -85,80 +81,83 @@ namespace Integrate
         {
             int i = 0; // premptive init of i because there's a couple loops
                        // in here that use it (but one after the other)
-
-            GL.Color4(_Color);
-
-            // Draw the rear circle (even indices)
-            GL.Begin(PrimitiveType.Polygon);
+            if (!OptionBank.Wireframe)
             {
-                for (i = 0; i < Vertices.Length; i += 2)
-                {
-                    GL.Vertex3(Vertices[i]);
-                }
-            }
-            GL.End();
+                GL.Color4(_Color);
 
-            // Draw the front circle (odd indices)
-            GL.Begin(PrimitiveType.Polygon);
-            {
-                for (i = 1; i < Vertices.Length; i += 2)
+                // Draw the rear circle (even indices)
+                GL.Begin(PrimitiveType.Polygon);
                 {
-                    GL.Vertex3(Vertices[i]);
-                }
-            }
-            GL.End();
-
-            // Draw the connecting bits
-            GL.Begin(PrimitiveType.TriangleStrip);
-            {
-
-                for (i = 0; i < Vertices.Length; i += 2)
-                {
-                    GL.Vertex3(Vertices[i]);
-                    GL.Vertex3(Vertices[i + 1]);
-                }
-            }
-            GL.End();
-
-            // Draw lines along the sides of the thing to give it contours
-            // and junk til i can get shading figured out
-            if (DrawTrunkOutlines)
-            {
-                GL.Begin(PrimitiveType.Lines);
-                {
-                    GL.Color4(Color4.Black);
                     for (i = 0; i < Vertices.Length; i += 2)
                     {
-                        GL.Vertex3(MoveOutwards(Vertices[i]));
-                        GL.Vertex3(MoveOutwards(Vertices[i + 1]));
+                        GL.Vertex3(Vertices[i]);
                     }
                 }
                 GL.End();
-            }
 
-            // Draw a circle on the front and back to give shape to that circle
-            // so that it's actually VISIBLE
-            if (DrawCapOutlines)
-            {
-                GL.Begin(PrimitiveType.LineLoop);
+                // Draw the front circle (odd indices)
+                GL.Begin(PrimitiveType.Polygon);
                 {
-                    GL.Color4(Color4.Black);
-                    // Back circle
-                    for (i = 0; i < Vertices.Length; i += 2)
-                    {
-                        GL.Vertex3(MoveOutwards(Vertices[i]));
-                    }
-                }
-                GL.End();
-                GL.Begin(PrimitiveType.LineLoop);
-                {
-                    // Front circle
                     for (i = 1; i < Vertices.Length; i += 2)
                     {
-                        GL.Vertex3(MoveOutwards(Vertices[i]));
+                        GL.Vertex3(Vertices[i]);
                     }
                 }
                 GL.End();
+
+                // Draw the connecting bits
+                GL.Begin(PrimitiveType.TriangleStrip);
+                {
+
+                    for (i = 0; i < Vertices.Length; i += 2)
+                    {
+                        GL.Vertex3(Vertices[i]);
+                        GL.Vertex3(Vertices[i + 1]);
+                    }
+                }
+                GL.End();
+            }
+            // Draw lines along the sides of the thing to give it contours
+            // and junk til i can get shading figured out
+            else // if wireframe
+            {
+                if (OptionBank.DrawTrunkLines)
+                {
+                    GL.Begin(PrimitiveType.Lines);
+                    {
+                        GL.Color4(Color4.Black);
+                        for (i = 0; i < Vertices.Length; i += 2)
+                        {
+                            GL.Vertex3(MoveOutwards(Vertices[i]));
+                            GL.Vertex3(MoveOutwards(Vertices[i + 1]));
+                        }
+                    }
+                    GL.End();
+                }
+
+                if (OptionBank.DrawCapLines)
+                {
+                    GL.Begin(PrimitiveType.LineLoop);
+                    {
+                        GL.Color4(Color4.Black);
+                        // Back circle
+                        for (i = 0; i < Vertices.Length; i += 2)
+                        {
+                            GL.Vertex3(MoveOutwards(Vertices[i]));
+                        }
+                    }
+                    GL.End();
+
+                    GL.Begin(PrimitiveType.LineLoop);
+                    {
+                        // Front circle
+                        for (i = 1; i < Vertices.Length; i += 2)
+                        {
+                            GL.Vertex3(MoveOutwards(Vertices[i]));
+                        }
+                    }
+                    GL.End();
+                }
             }
         }
 

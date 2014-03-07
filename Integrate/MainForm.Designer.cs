@@ -45,6 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.HelpBtn = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
+            this.btnShowOptions = new System.Windows.Forms.Button();
             this.CamControlBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -143,7 +144,8 @@
             "f(x) = x^2",
             "f(x) = x ^ 3",
             "f(x) = sin(x)",
-            "f(x) = cos(x)"});
+            "f(x) = cos(x)",
+            "f(x) = 0"});
             this.FuncSelectBox.Location = new System.Drawing.Point(81, 471);
             this.FuncSelectBox.Name = "FuncSelectBox";
             this.FuncSelectBox.Size = new System.Drawing.Size(173, 21);
@@ -217,12 +219,23 @@
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
+            // btnShowOptions
+            // 
+            this.btnShowOptions.Location = new System.Drawing.Point(635, 447);
+            this.btnShowOptions.Name = "btnShowOptions";
+            this.btnShowOptions.Size = new System.Drawing.Size(75, 54);
+            this.btnShowOptions.TabIndex = 7;
+            this.btnShowOptions.Text = "Help!";
+            this.btnShowOptions.UseVisualStyleBackColor = true;
+            this.btnShowOptions.Click += new System.EventHandler(this.btnShowOptions_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 512);
             this.Controls.Add(this.btnApply);
+            this.Controls.Add(this.btnShowOptions);
             this.Controls.Add(this.HelpBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -261,6 +274,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button HelpBtn;
         private System.Windows.Forms.Button btnApply;
+        private System.Windows.Forms.Button btnShowOptions;
 
     }
 }

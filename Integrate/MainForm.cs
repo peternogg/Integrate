@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -29,7 +30,7 @@ namespace Integrate
         // Primary form loading event
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         // Loading and prepping the GL renderer
@@ -37,7 +38,7 @@ namespace Integrate
         {
             // Primary init (view setup)
             Matrix4 Pers = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 2, 4f / 3f, .1f, 100f);
-            Matrix4 LookAt = Matrix4.LookAt(new Vector3(0, 0f, -5f), Vector3.Zero, Vector3.UnitY);
+            Matrix4 LookAt = Matrix4.LookAt(new Vector3(0, 0f, 5f), Vector3.Zero, Vector3.UnitY);
             
             // Load the view matricies into OpenGL
             GL.MatrixMode(MatrixMode.Projection);
@@ -68,6 +69,7 @@ namespace Integrate
             Functions.Add(x => { return x * x * x; });
             Functions.Add(x => { return Math.Sin(x); });
             Functions.Add(x => { return Math.Cos(x); });
+            Functions.Add(x => { return 0; });
 
             // Setup the initial integral
             integ = new Integral(
@@ -105,12 +107,9 @@ namespace Integrate
                 GL.Vertex3(0f, 2f, 1f);
             }
             GL.End();
-
-
 #endif
 
             integ.Draw();
-
             // FUCKIng
             // Draw the frame to the viewport
             Viewport.SwapBuffers();
@@ -154,10 +153,10 @@ namespace Integrate
 
                     // Camera Translation (Z)
                 case 'r':
-                    CameraMove(0f, 0f, CamMoveSpeed);
+                    CameraMove(0f, 0f, -CamMoveSpeed);
                     break;
                 case 'f':
-                    CameraMove(0f, 0f, -CamMoveSpeed);
+                    CameraMove(0f, 0f, CamMoveSpeed);
                     break;
                     
                     // Camera rotation about the Y Axis
@@ -170,10 +169,10 @@ namespace Integrate
 
                     // Camera rotation about the X axis (above and below)
                 case 't':
-                    CameraRotate(-CamRotateSpeed, Vector3.UnitX);
+                    CameraRotate(CamRotateSpeed, Vector3.UnitX);
                     break;
                 case 'g':
-                    CameraRotate(CamRotateSpeed, Vector3.UnitX);
+                    CameraRotate(-CamRotateSpeed, Vector3.UnitX);
                     break;
 
             }
@@ -290,7 +289,7 @@ namespace Integrate
 
         private void CamResetBtn_Click(object sender, EventArgs e)
         {
-            Matrix4 LookAt = Matrix4.LookAt(new Vector3(0, 0f, -5f), Vector3.Zero, Vector3.UnitY);
+            Matrix4 LookAt = Matrix4.LookAt(new Vector3(0, 0f, 5f), Vector3.Zero, Vector3.UnitY);
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref LookAt);
@@ -304,6 +303,20 @@ namespace Integrate
 #if DEBUG
             Console.WriteLine(RotateCameraMode);
 #endif
+        }
+
+        private void btnShowOptions_Click(object sender, EventArgs e)
+        {
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += (bwsender, bwe) => {
+                Application.Run(new OptionsForm());
+            };
+
+            bw.RunWorkerCompleted += (bwsender, bwe) => {
+                Viewport.Invalidate();
+            };
+
+            bw.RunWorkerAsync();
         }
     }
 }
