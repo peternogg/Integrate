@@ -16,15 +16,9 @@ namespace Integrate
             InitializeComponent();
         }
 
-        private void chkCylTrunk_CheckedChanged(object sender, EventArgs e)
-        {
-            OptionBank.DrawTrunkLines = chkCylTrunk.Checked;
-        }
-
-        private void chkCylCap_CheckedChanged(object sender, EventArgs e)
-        {
-            OptionBank.DrawCapLines = chkCylCap.Checked;
-        }
+        // Local options to set and deal with
+        bool TrunkLines, CapLines, WireframeMode;
+        // Other options added here
 
         private void chkCylWireframe_CheckedChanged(object sender, EventArgs e)
         {
@@ -34,8 +28,8 @@ namespace Integrate
         private void OptionsForm_Load(object sender, EventArgs e)
         {
             chkCylWireframe.Checked = OptionBank.Wireframe;
-            chkCylTrunk.Checked = OptionBank.DrawTrunkLines;
-            chkCylCap.Checked = OptionBank.DrawCapLines;
+
+            WireframeMode = OptionBank.Wireframe;
         }
     }
 }

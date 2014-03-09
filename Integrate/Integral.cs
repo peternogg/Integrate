@@ -12,6 +12,7 @@ namespace Integrate
         // 2-element vectors are smaller and so consume less space
         Vector2d[] GraphPoints;
         Cylinder[] Disks;
+        Color4 _Color = Color4.LightGray;
         public Integral(Func<double, double> function, int Divisions, double Start, double End)
         {
             GraphPoints = new Vector2d[Divisions];
@@ -64,7 +65,7 @@ namespace Integrate
             GL.Begin(PrimitiveType.LineStrip);
             {
                 // Should add a color variable
-                GL.Color4(Color4.Red);
+                GL.Color4(_Color);
                 for (int i = 0; i < GraphPoints.Length; i++)
                 {
                     GL.Vertex2(GraphPoints[i]);

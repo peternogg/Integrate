@@ -46,6 +46,10 @@
             this.HelpBtn = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnShowOptions = new System.Windows.Forms.Button();
+            this.CamBackBtn = new System.Windows.Forms.Button();
+            this.CamFwdBtn = new System.Windows.Forms.Button();
+            this.PanRotLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.CamControlBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,11 +67,15 @@
             // 
             // CamControlBox
             // 
+            this.CamControlBox.Controls.Add(this.label4);
+            this.CamControlBox.Controls.Add(this.PanRotLabel);
             this.CamControlBox.Controls.Add(this.CamUpBtn);
             this.CamControlBox.Controls.Add(this.CamDownBtn);
             this.CamControlBox.Controls.Add(this.ToggleModeButton);
             this.CamControlBox.Controls.Add(this.CamRightBtn);
             this.CamControlBox.Controls.Add(this.CamResetBtn);
+            this.CamControlBox.Controls.Add(this.CamFwdBtn);
+            this.CamControlBox.Controls.Add(this.CamBackBtn);
             this.CamControlBox.Controls.Add(this.CamLeftBtn);
             this.CamControlBox.Location = new System.Drawing.Point(582, 13);
             this.CamControlBox.Name = "CamControlBox";
@@ -166,6 +174,7 @@
             this.txtLimB.Name = "txtLimB";
             this.txtLimB.Size = new System.Drawing.Size(21, 20);
             this.txtLimB.TabIndex = 4;
+            this.txtLimB.Text = "2";
             // 
             // label2
             // 
@@ -182,6 +191,7 @@
             this.txtLimA.Name = "txtLimA";
             this.txtLimA.Size = new System.Drawing.Size(21, 20);
             this.txtLimA.TabIndex = 4;
+            this.txtLimA.Text = "-2";
             // 
             // txtSubdiv
             // 
@@ -189,6 +199,7 @@
             this.txtSubdiv.Name = "txtSubdiv";
             this.txtSubdiv.Size = new System.Drawing.Size(21, 20);
             this.txtSubdiv.TabIndex = 4;
+            this.txtSubdiv.Text = "10";
             // 
             // label3
             // 
@@ -221,13 +232,53 @@
             // 
             // btnShowOptions
             // 
+            this.btnShowOptions.Enabled = false;
             this.btnShowOptions.Location = new System.Drawing.Point(635, 447);
             this.btnShowOptions.Name = "btnShowOptions";
             this.btnShowOptions.Size = new System.Drawing.Size(75, 54);
             this.btnShowOptions.TabIndex = 7;
-            this.btnShowOptions.Text = "Help!";
+            this.btnShowOptions.Text = "Options";
             this.btnShowOptions.UseVisualStyleBackColor = true;
             this.btnShowOptions.Click += new System.EventHandler(this.btnShowOptions_Click);
+            // 
+            // CamBackBtn
+            // 
+            this.CamBackBtn.Location = new System.Drawing.Point(145, 229);
+            this.CamBackBtn.Name = "CamBackBtn";
+            this.CamBackBtn.Size = new System.Drawing.Size(64, 64);
+            this.CamBackBtn.TabIndex = 0;
+            this.CamBackBtn.Text = "Away";
+            this.CamBackBtn.UseVisualStyleBackColor = true;
+            this.CamBackBtn.Click += new System.EventHandler(this.CamBackBtn_Click);
+            // 
+            // CamFwdBtn
+            // 
+            this.CamFwdBtn.Location = new System.Drawing.Point(6, 229);
+            this.CamFwdBtn.Name = "CamFwdBtn";
+            this.CamFwdBtn.Size = new System.Drawing.Size(64, 64);
+            this.CamFwdBtn.TabIndex = 0;
+            this.CamFwdBtn.Text = "Towards";
+            this.CamFwdBtn.UseVisualStyleBackColor = true;
+            this.CamFwdBtn.Click += new System.EventHandler(this.CamFwdBtn_Click);
+            // 
+            // PanRotLabel
+            // 
+            this.PanRotLabel.AutoSize = true;
+            this.PanRotLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PanRotLabel.Location = new System.Drawing.Point(104, 331);
+            this.PanRotLabel.Name = "PanRotLabel";
+            this.PanRotLabel.Size = new System.Drawing.Size(67, 20);
+            this.PanRotLabel.TabIndex = 1;
+            this.PanRotLabel.Text = "Panning";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(22, 337);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Camera Mode:";
             // 
             // MainForm
             // 
@@ -250,6 +301,7 @@
             this.Text = "Integrate";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.CamControlBox.ResumeLayout(false);
+            this.CamControlBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,6 +327,10 @@
         private System.Windows.Forms.Button HelpBtn;
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.Button btnShowOptions;
+        private System.Windows.Forms.Button CamFwdBtn;
+        private System.Windows.Forms.Button CamBackBtn;
+        private System.Windows.Forms.Label PanRotLabel;
+        private System.Windows.Forms.Label label4;
 
     }
 }

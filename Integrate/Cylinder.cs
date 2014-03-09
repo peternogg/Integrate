@@ -33,7 +33,6 @@ namespace Integrate
         {
             // Probably won't happen but just to remind myself (catastrophically)
             if (nVertices % 2 != 0) throw new IndexOutOfRangeException("nVertices must be a multiple of 2");
-            if (nVertices > 256) { OptionBank.DrawCapLines = false; OptionBank.DrawTrunkLines = false; }
 
 
             // Set all the vertices to the 'center' of the circle
@@ -121,44 +120,39 @@ namespace Integrate
             // and junk til i can get shading figured out
             else // if wireframe
             {
-                if (OptionBank.DrawTrunkLines)
+                GL.Begin(PrimitiveType.Lines);
                 {
-                    GL.Begin(PrimitiveType.Lines);
+                    GL.Color4(Color4.Black);
+                    for (i = 0; i < Vertices.Length; i += 2)
                     {
-                        GL.Color4(Color4.Black);
-                        for (i = 0; i < Vertices.Length; i += 2)
-                        {
-                            GL.Vertex3(MoveOutwards(Vertices[i]));
-                            GL.Vertex3(MoveOutwards(Vertices[i + 1]));
-                        }
+                        GL.Vertex3(MoveOutwards(Vertices[i]));
+                        GL.Vertex3(MoveOutwards(Vertices[i + 1]));
                     }
-                    GL.End();
                 }
-
-                if (OptionBank.DrawCapLines)
+                GL.End();
+            }
+            
+            // Always draw caps
+            GL.Begin(PrimitiveType.LineLoop);
+            {
+                GL.Color4(Color4.Black);
+                // Back circle
+                for (i = 0; i < Vertices.Length; i += 2)
                 {
-                    GL.Begin(PrimitiveType.LineLoop);
-                    {
-                        GL.Color4(Color4.Black);
-                        // Back circle
-                        for (i = 0; i < Vertices.Length; i += 2)
-                        {
-                            GL.Vertex3(MoveOutwards(Vertices[i]));
-                        }
-                    }
-                    GL.End();
-
-                    GL.Begin(PrimitiveType.LineLoop);
-                    {
-                        // Front circle
-                        for (i = 1; i < Vertices.Length; i += 2)
-                        {
-                            GL.Vertex3(MoveOutwards(Vertices[i]));
-                        }
-                    }
-                    GL.End();
+                    GL.Vertex3(MoveOutwards(Vertices[i]));
                 }
             }
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineLoop);
+            {
+                // Front circle
+                for (i = 1; i < Vertices.Length; i += 2)
+                {
+                    GL.Vertex3(MoveOutwards(Vertices[i]));
+                }
+            }
+            GL.End();
         }
 
         private Vector3d MoveOutwards(Vector3d ToMove)

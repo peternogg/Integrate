@@ -30,7 +30,9 @@ namespace Integrate
         // Primary form loading event
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            // Give the FuncSelectBox its default value of 0
+            FuncSelectBox.SelectedIndex = 0;
+            FuncSelectBox.Refresh();
         }
 
         // Loading and prepping the GL renderer
@@ -73,10 +75,10 @@ namespace Integrate
 
             // Setup the initial integral
             integ = new Integral(
-                function: Functions[0],            
-                Divisions:     10,
-                Start:         -2,
-                End:            2);
+                function: Functions[0],
+                Divisions: 10,
+                Start: -2,
+                End: 2);
 
             // Draw the first frame on the viewport
             Viewport.Invalidate();
@@ -85,29 +87,47 @@ namespace Integrate
         // Renders the scene into the viewport
         private void Viewport_Paint(object sender, PaintEventArgs e)
         {
-
-
             GL.ClearColor(Color4.CornflowerBlue);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-#if DEBUG
-            // Debug code to draw some stuff
+            // Draw world axes
             GL.Begin(PrimitiveType.Lines);
             {
                 GL.Color4(Color4.Red);
-                GL.Vertex3(-2f, 0f, 0f);
-                GL.Vertex3(2f, 0f, 0f);
+                GL.Vertex3(-50f, 0f, 0f);
+                GL.Vertex3(50f, 0f, 0f);
+                
+                // Draw the grid lines/markers from -50 to 50 units out
+                // TODO: Make these adjustable
+                for (int i = -50; i < 50; i++)
+                {
+                    GL.Vertex3(i, 0.125, 0);
+                    GL.Vertex3(i, -0.125, 0);
+                }
 
                 GL.Color4(Color4.Blue);
-                GL.Vertex3(0f, -2f, 0f);
-                GL.Vertex3(0f, 2f, 0f);
+                GL.Vertex3(0f, -50f, 0f);
+                GL.Vertex3(0f, 50f, 0f);
+
+                // Draw Y-axis markers
+                for (int i = -50; i < 50; i++)
+                {
+                    GL.Vertex3(0.125, i, 0);
+                    GL.Vertex3(-0.125, i, 0);
+                }
 
                 GL.Color4(Color.Green);
-                GL.Vertex3(0f, 2f, 0f);
-                GL.Vertex3(0f, 2f, 1f);
+                GL.Vertex3(0f, 0f, -50f);
+                GL.Vertex3(0f, 0f, 50f);
+
+                // Draw Z-axis markers
+                for (int i = -50; i < 50; i++)
+                {
+                    GL.Vertex3(0, 0.125, i);
+                    GL.Vertex3(0, -0.125, i);
+                }
             }
             GL.End();
-#endif
 
             integ.Draw();
             // FUCKIng
@@ -139,10 +159,10 @@ namespace Integrate
             {
                     // Camera Translation (X, Y)
                 case 'a':
-                    CameraMove(CamMoveSpeed, 0f, 0f);
+                    CameraMove(-CamMoveSpeed, 0f, 0f);
                     break;
                 case 'd':
-                    CameraMove(-CamMoveSpeed, 0f, 0f);
+                    CameraMove(CamMoveSpeed, 0f, 0f);
                     break;
                 case 'w':
                     CameraMove(0f, CamMoveSpeed, 0f);
@@ -256,7 +276,7 @@ namespace Integrate
             }
             else
             {
-                CameraMove(CamMoveSpeed, 0f, 0f);
+                CameraMove(-CamMoveSpeed, 0f, 0f);
             }
             Viewport.Invalidate();
         }
@@ -282,7 +302,7 @@ namespace Integrate
             }
             else
             {
-                CameraMove(-CamMoveSpeed, 0f, 0f);
+                CameraMove(CamMoveSpeed, 0f, 0f);
             }
             Viewport.Invalidate();
         }
@@ -300,9 +320,25 @@ namespace Integrate
         private void ToggleModeButton_Click(object sender, EventArgs e)
         {
             RotateCameraMode = !RotateCameraMode;
+            if (RotateCameraMode) PanRotLabel.Text = "Rotating"; else PanRotLabel.Text = "Panning";
+            SwapButtonLabels();
 #if DEBUG
             Console.WriteLine(RotateCameraMode);
 #endif
+        }
+
+        private void SwapButtonLabels()
+        {
+            if (RotateCameraMode)
+            {
+                CamUpBtn.Text = "Over";
+                CamDownBtn.Text = "Under";
+            }
+            else
+            {
+                CamUpBtn.Text = "Up";
+                CamDownBtn.Text = "Down";
+            }
         }
 
         private void btnShowOptions_Click(object sender, EventArgs e)
@@ -317,6 +353,19 @@ namespace Integrate
             };
 
             bw.RunWorkerAsync();
+        }
+
+        private void CamFwdBtn_Click(object sender, EventArgs e)
+        {
+            // Doesn't deal with toggle stuff
+            CameraMove(0f, 0f, -CamMoveSpeed);
+            Viewport.Invalidate();
+        }
+
+        private void CamBackBtn_Click(object sender, EventArgs e)
+        {
+            CameraMove(0f, 0f, CamMoveSpeed);
+            Viewport.Invalidate();
         }
     }
 }
