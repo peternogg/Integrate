@@ -12,6 +12,8 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using NCalc;
+
 namespace Integrate
 {
     public partial class MainForm : Form
@@ -19,20 +21,18 @@ namespace Integrate
         public MainForm()
         {
             InitializeComponent();
-            
         }
 
         Integral integ;
-        List<Func<double, double>> Functions = new List<Func<double,double>>(); // How generic
+        Expression exp = new Expression("x");
         float CamMoveSpeed = 0.1f, CamRotateSpeed = 0.1f;
         bool RotateCameraMode = false;
+        
 
         // Primary form loading event
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // Give the FuncSelectBox its default value of 0
-            FuncSelectBox.SelectedIndex = 0;
-            FuncSelectBox.Refresh();
+
         }
 
         // Loading and prepping the GL renderer
@@ -40,7 +40,7 @@ namespace Integrate
         {
             // Primary init (view setup)
             Matrix4 Pers = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 2, 4f / 3f, .1f, 100f);
-            Matrix4 LookAt = Matrix4.LookAt(new Vector3(0, 0f, 5f), Vector3.Zero, Vector3.UnitY);
+            Matrix4 LookAt = Matrix4.LookAt(new Vector3(0, 0f, 3.5f), Vector3.Zero, Vector3.UnitY);
             
             // Load the view matricies into OpenGL
             GL.MatrixMode(MatrixMode.Projection);
@@ -66,16 +66,10 @@ namespace Integrate
             // and index of that should DIRECTLY correspond to the 
             // same function in this list. That is, index 0 (f(x) = x) is
             // the index of x => return x; here.
-            Functions.Add(x => { return x; });
-            Functions.Add(x => { return x * x; });
-            Functions.Add(x => { return x * x * x; });
-            Functions.Add(x => { return Math.Sin(x); });
-            Functions.Add(x => { return Math.Cos(x); });
-            Functions.Add(x => { return 0; });
 
             // Setup the initial integral
             integ = new Integral(
-                function: Functions[0],
+                function: exp,
                 Divisions: 10,
                 Start: -2,
                 End: 2);
@@ -220,15 +214,30 @@ namespace Integrate
                 {
                     if (int.TryParse(txtSubdiv.Text, out N))
                     {
-                        // All things are good, do the stuff
-                        // Remake the integral so that it's
-                        // recalculated
-                        integ = new Integral(
-                            function: Functions[FuncSelectBox.SelectedIndex],
-                            Divisions: N,
-                            Start: A,
-                            End: B
-                         );
+                        if (FuncEntryBox.Text != "") {
+                            // Looks good, let's check if the function is valid
+
+                            exp = new Expression(FuncEntryBox.Text);
+                            if (exp.HasErrors())
+                            {
+                                MessageBox.Show("The function you entered is invalid.", "Function Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            }
+                            else
+                            {
+                                integ = new Integral(
+                                    function: exp,
+                                    Divisions: N,
+                                    Start: A,
+                                    End: B
+                                 );
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("You have to enter something in the box!", "Function Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
                     }
                     else
                     {

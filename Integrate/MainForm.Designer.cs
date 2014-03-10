@@ -28,15 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Viewport = new AAGLControlLib.AAGLControl();
             this.CamControlBox = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.PanRotLabel = new System.Windows.Forms.Label();
             this.CamUpBtn = new System.Windows.Forms.Button();
             this.CamDownBtn = new System.Windows.Forms.Button();
             this.ToggleModeButton = new System.Windows.Forms.Button();
             this.CamRightBtn = new System.Windows.Forms.Button();
             this.CamResetBtn = new System.Windows.Forms.Button();
+            this.CamFwdBtn = new System.Windows.Forms.Button();
+            this.CamBackBtn = new System.Windows.Forms.Button();
             this.CamLeftBtn = new System.Windows.Forms.Button();
-            this.FuncSelectBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtLimB = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,24 +48,13 @@
             this.HelpBtn = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnShowOptions = new System.Windows.Forms.Button();
-            this.CamBackBtn = new System.Windows.Forms.Button();
-            this.CamFwdBtn = new System.Windows.Forms.Button();
-            this.PanRotLabel = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.FuncEntryBox = new System.Windows.Forms.TextBox();
+            this.Viewport = new AAGLControlLib.AAGLControl();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.CamControlBox.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Viewport
-            // 
-            this.Viewport.BackColor = System.Drawing.Color.Black;
-            this.Viewport.Location = new System.Drawing.Point(13, 13);
-            this.Viewport.Name = "Viewport";
-            this.Viewport.Size = new System.Drawing.Size(563, 424);
-            this.Viewport.TabIndex = 0;
-            this.Viewport.VSync = true;
-            this.Viewport.Load += new System.EventHandler(this.Viewport_Load);
-            this.Viewport.Paint += new System.Windows.Forms.PaintEventHandler(this.Viewport_Paint);
-            this.Viewport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Viewport_KeyPress);
             // 
             // CamControlBox
             // 
@@ -83,6 +74,25 @@
             this.CamControlBox.TabIndex = 1;
             this.CamControlBox.TabStop = false;
             this.CamControlBox.Text = "Camera Controls";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(22, 337);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Camera Mode:";
+            // 
+            // PanRotLabel
+            // 
+            this.PanRotLabel.AutoSize = true;
+            this.PanRotLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PanRotLabel.Location = new System.Drawing.Point(104, 331);
+            this.PanRotLabel.Name = "PanRotLabel";
+            this.PanRotLabel.Size = new System.Drawing.Size(67, 20);
+            this.PanRotLabel.TabIndex = 1;
+            this.PanRotLabel.Text = "Panning";
             // 
             // CamUpBtn
             // 
@@ -134,6 +144,26 @@
             this.CamResetBtn.UseVisualStyleBackColor = true;
             this.CamResetBtn.Click += new System.EventHandler(this.CamResetBtn_Click);
             // 
+            // CamFwdBtn
+            // 
+            this.CamFwdBtn.Location = new System.Drawing.Point(6, 229);
+            this.CamFwdBtn.Name = "CamFwdBtn";
+            this.CamFwdBtn.Size = new System.Drawing.Size(64, 64);
+            this.CamFwdBtn.TabIndex = 0;
+            this.CamFwdBtn.Text = "Towards";
+            this.CamFwdBtn.UseVisualStyleBackColor = true;
+            this.CamFwdBtn.Click += new System.EventHandler(this.CamFwdBtn_Click);
+            // 
+            // CamBackBtn
+            // 
+            this.CamBackBtn.Location = new System.Drawing.Point(145, 229);
+            this.CamBackBtn.Name = "CamBackBtn";
+            this.CamBackBtn.Size = new System.Drawing.Size(64, 64);
+            this.CamBackBtn.TabIndex = 0;
+            this.CamBackBtn.Text = "Away";
+            this.CamBackBtn.UseVisualStyleBackColor = true;
+            this.CamBackBtn.Click += new System.EventHandler(this.CamBackBtn_Click);
+            // 
             // CamLeftBtn
             // 
             this.CamLeftBtn.Location = new System.Drawing.Point(6, 89);
@@ -144,29 +174,14 @@
             this.CamLeftBtn.UseVisualStyleBackColor = true;
             this.CamLeftBtn.Click += new System.EventHandler(this.CamLeftBtn_Click);
             // 
-            // FuncSelectBox
-            // 
-            this.FuncSelectBox.FormattingEnabled = true;
-            this.FuncSelectBox.Items.AddRange(new object[] {
-            "f(x) = x",
-            "f(x) = x^2",
-            "f(x) = x ^ 3",
-            "f(x) = sin(x)",
-            "f(x) = cos(x)",
-            "f(x) = 0"});
-            this.FuncSelectBox.Location = new System.Drawing.Point(81, 471);
-            this.FuncSelectBox.Name = "FuncSelectBox";
-            this.FuncSelectBox.Size = new System.Drawing.Size(173, 21);
-            this.FuncSelectBox.TabIndex = 2;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(78, 446);
+            this.label1.Location = new System.Drawing.Point(133, 455);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Select a Function";
+            this.label1.Text = "Enter a Function";
             // 
             // txtLimB
             // 
@@ -175,6 +190,7 @@
             this.txtLimB.Size = new System.Drawing.Size(21, 20);
             this.txtLimB.TabIndex = 4;
             this.txtLimB.Text = "2";
+            this.txtLimB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
             // 
@@ -192,23 +208,25 @@
             this.txtLimA.Size = new System.Drawing.Size(21, 20);
             this.txtLimA.TabIndex = 4;
             this.txtLimA.Text = "-2";
+            this.txtLimA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSubdiv
             // 
-            this.txtSubdiv.Location = new System.Drawing.Point(271, 471);
+            this.txtSubdiv.Location = new System.Drawing.Point(356, 471);
             this.txtSubdiv.Name = "txtSubdiv";
             this.txtSubdiv.Size = new System.Drawing.Size(21, 20);
             this.txtSubdiv.TabIndex = 4;
             this.txtSubdiv.Text = "10";
+            this.txtSubdiv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(298, 474);
+            this.label3.Location = new System.Drawing.Point(383, 474);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 13);
+            this.label3.Size = new System.Drawing.Size(113, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Subdivisions";
+            this.label3.Text = "Subdivisions/Cylinders";
             // 
             // HelpBtn
             // 
@@ -222,9 +240,9 @@
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(443, 463);
+            this.btnApply.Location = new System.Drawing.Point(512, 443);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(75, 23);
+            this.btnApply.Size = new System.Drawing.Size(64, 64);
             this.btnApply.TabIndex = 8;
             this.btnApply.Text = "Apply Changes";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -241,62 +259,75 @@
             this.btnShowOptions.UseVisualStyleBackColor = true;
             this.btnShowOptions.Click += new System.EventHandler(this.btnShowOptions_Click);
             // 
-            // CamBackBtn
+            // FuncEntryBox
             // 
-            this.CamBackBtn.Location = new System.Drawing.Point(145, 229);
-            this.CamBackBtn.Name = "CamBackBtn";
-            this.CamBackBtn.Size = new System.Drawing.Size(64, 64);
-            this.CamBackBtn.TabIndex = 0;
-            this.CamBackBtn.Text = "Away";
-            this.CamBackBtn.UseVisualStyleBackColor = true;
-            this.CamBackBtn.Click += new System.EventHandler(this.CamBackBtn_Click);
+            this.FuncEntryBox.Location = new System.Drawing.Point(136, 471);
+            this.FuncEntryBox.Name = "FuncEntryBox";
+            this.FuncEntryBox.Size = new System.Drawing.Size(161, 20);
+            this.FuncEntryBox.TabIndex = 9;
+            this.FuncEntryBox.Text = "x";
             // 
-            // CamFwdBtn
+            // Viewport
             // 
-            this.CamFwdBtn.Location = new System.Drawing.Point(6, 229);
-            this.CamFwdBtn.Name = "CamFwdBtn";
-            this.CamFwdBtn.Size = new System.Drawing.Size(64, 64);
-            this.CamFwdBtn.TabIndex = 0;
-            this.CamFwdBtn.Text = "Towards";
-            this.CamFwdBtn.UseVisualStyleBackColor = true;
-            this.CamFwdBtn.Click += new System.EventHandler(this.CamFwdBtn_Click);
+            this.Viewport.BackColor = System.Drawing.Color.Black;
+            this.Viewport.Location = new System.Drawing.Point(13, 13);
+            this.Viewport.Name = "Viewport";
+            this.Viewport.Size = new System.Drawing.Size(563, 424);
+            this.Viewport.TabIndex = 0;
+            this.Viewport.VSync = true;
+            this.Viewport.Load += new System.EventHandler(this.Viewport_Load);
+            this.Viewport.Paint += new System.Windows.Forms.PaintEventHandler(this.Viewport_Paint);
+            this.Viewport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Viewport_KeyPress);
             // 
-            // PanRotLabel
+            // label5
             // 
-            this.PanRotLabel.AutoSize = true;
-            this.PanRotLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PanRotLabel.Location = new System.Drawing.Point(104, 331);
-            this.PanRotLabel.Name = "PanRotLabel";
-            this.PanRotLabel.Size = new System.Drawing.Size(67, 20);
-            this.PanRotLabel.TabIndex = 1;
-            this.PanRotLabel.Text = "Panning";
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(78, 448);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(37, 55);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "∫";
             // 
-            // label4
+            // label6
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 337);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Camera Mode:";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(321, 474);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "With";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(100, 474);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(30, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "f(x) =";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 512);
+            this.Controls.Add(this.FuncEntryBox);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.btnShowOptions);
             this.Controls.Add(this.HelpBtn);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtSubdiv);
             this.Controls.Add(this.txtLimA);
             this.Controls.Add(this.txtLimB);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.FuncSelectBox);
             this.Controls.Add(this.CamControlBox);
             this.Controls.Add(this.Viewport);
+            this.Controls.Add(this.label5);
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Integrate";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -317,7 +348,6 @@
         private System.Windows.Forms.Button ToggleModeButton;
         private System.Windows.Forms.Button CamRightBtn;
         private System.Windows.Forms.Button CamResetBtn;
-        private System.Windows.Forms.ComboBox FuncSelectBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtLimB;
         private System.Windows.Forms.Label label2;
@@ -331,6 +361,10 @@
         private System.Windows.Forms.Button CamBackBtn;
         private System.Windows.Forms.Label PanRotLabel;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox FuncEntryBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
 
     }
 }

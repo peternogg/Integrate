@@ -5,6 +5,8 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using NCalc;
+
 namespace Integrate
 {
     class Integral
@@ -13,7 +15,7 @@ namespace Integrate
         Vector2d[] GraphPoints;
         Cylinder[] Disks;
         Color4 _Color = Color4.LightGray;
-        public Integral(Func<double, double> function, int Divisions, double Start, double End)
+        public Integral(Expression function, int Divisions, double Start, double End)
         {
             GraphPoints = new Vector2d[Divisions];
             Disks = new Cylinder[Divisions];
@@ -21,7 +23,7 @@ namespace Integrate
             Calculate(function, Divisions, Start, End);
         }
 
-        private void Calculate(Func<double, double> F, int Divisions, double Start, double End)
+        private void Calculate(Expression F, int Divisions, double Start, double End)
         {
             // Create the difference in X values to generate 
             // the actual X values
@@ -30,8 +32,11 @@ namespace Integrate
             // Generate and store the graph points in double length Vectors
             for (int i = 0; i < GraphPoints.Length; i++)
             {
-                GraphPoints[i].X = Start + (dx * i);
-                GraphPoints[i].Y = F(GraphPoints[i].X);
+                // Set X = the X value at the point and store it in F and GraphPoints
+                F.Parameters["x"] = GraphPoints[i].X = Start + (dx * i);
+                Console.WriteLine(F.Evaluate());
+                GraphPoints[i].Y = Convert.ToDouble(F.Evaluate());
+                if (double.IsInfinity(GraphPoints[i].Y)) GraphPoints[i].Y = float.MaxValue;
             }
 
             // Build the cylinders
@@ -45,7 +50,8 @@ namespace Integrate
                 // and dx is how long it is, along the x axis
                 // TODO: Fix the calculations; there's something up that's making it 
                 // act really weird (not in the right place)
-                Disks[i] = new Cylinder(currPos, F(Start + (dx * i)), dx);
+                F.Parameters["x"] = Start + (dx * i);
+                Disks[i] = new Cylinder(currPos, Convert.ToDouble(F.Evaluate()), dx);
                 // Is it possible to do async constructors? Because it might help
                 // with speed a bit.
 

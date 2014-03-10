@@ -157,8 +157,16 @@ namespace Integrate
 
         private Vector3d MoveOutwards(Vector3d ToMove)
         {
-            ToMove.Y += Math.Sign(ToMove.Y) * 0.001;
-            ToMove.Z += Math.Sign(ToMove.Z) * 0.001;
+            try
+            {
+                ToMove.Y += Math.Sign(ToMove.Y) * 0.001;
+                ToMove.Z += Math.Sign(ToMove.Z) * 0.001;
+            }
+                // Breaks on 1/x for some reason? gives ([decimal], NaN, Infinity) in ToMove
+            catch (ArithmeticException e)
+            {
+                Console.WriteLine("Error in MoveOutwards (probably because 1/x or smth");
+            }
 
             return ToMove;
         }
