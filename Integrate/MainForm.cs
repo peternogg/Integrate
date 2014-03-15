@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading;
+using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -24,22 +24,22 @@ namespace Integrate
         }
 
         Integral integ;
-        Expression exp = new Expression("x");
-        float CamMoveSpeed = 0.1f, CamRotateSpeed = 0.1f;
+        Expression exp = new Expression("X");
+        float CamMoveSpeed = 0.1f, CamRotateSpeed = MathHelper.PiOver6 / 4f;
         bool RotateCameraMode = false;
         
 
         // Primary form loading event
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            Console.SetOut(new System.IO.StreamWriter("log.txt"));
         }
 
         // Loading and prepping the GL renderer
         private void Viewport_Load(object sender, EventArgs e)
         {
             // Primary init (view setup)
-            Matrix4 Pers = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 2, 4f / 3f, .1f, 100f);
+            Matrix4 Pers = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 2, Viewport.Width / Viewport.Height, .1f, 100f);
             Matrix4 LookAt = Matrix4.LookAt(new Vector3(0, 0f, 3.5f), Vector3.Zero, Vector3.UnitY);
             
             // Load the view matricies into OpenGL
@@ -200,6 +200,7 @@ namespace Integrate
         {
             float A, B;
             int N;
+            bool ExtraVariablesInExp = false;
 
             if (txtLimA.Text == "" || txtLimB.Text == "" || txtSubdiv.Text == "")
             {
@@ -215,22 +216,92 @@ namespace Integrate
                     if (int.TryParse(txtSubdiv.Text, out N))
                     {
                         if (FuncEntryBox.Text != "") {
-                            // Looks good, let's check if the function is valid
+                            // Looks good, let's reformat the function so that NCalc will take it
+                            // Convert the string to an array for a bit so that individual elements can
+                            // be edited
+                            char[] TempArray = FuncEntryBox.Text.ToCharArray();
+
+                            // Have regex find the beginnings of words (space or not) and put them into
+                            // m
+                            foreach (Match m in Regex.Matches(FuncEntryBox.Text, @"\w+"))
+                            {
+                                // TempArray is a 1:1 copy of FuncEntryBox.Text but in a different type
+                                // so indexing into it gives the same result as indexing into .Text
+                                // which is to say that it's the same character in the same spot
+                                TempArray[m.Index] = Char.ToUpper(FuncEntryBox.Text[m.Index]);
+                                // This bit takes that character and UpperCases it if it's at the beginning
+                                // of a word, then stores it at the same place it came from in TempArray
+                                // The result is that x + sin(x) becomes X + Sin(X)
+                            }
+
+                            // Next up we have to make sure that all of the non-beginning characters are lower-case
+                            foreach (Match m in Regex.Matches(FuncEntryBox.Text, @"\B\w+"))
+                            {
+                                // Starting at the index of the match, go to the match + the length of that matching string
+                                for (int i = m.Index; i < (m.Index + m.Length); i++)
+                                {
+                                    TempArray[i] = Char.ToLower(FuncEntryBox.Text[i]);
+                                }
+                            }
+
+                            // This loop removes and non-word values that aren't +, -, *, \, a space or parenthesis
+                            foreach (Match m in Regex.Matches(FuncEntryBox.Text, @"(?(\W)[^\+\-\/\*\s\(\)]|\W)"))
+                            {
+                                TempArray[m.Index] = '\0';
+                            }
+                            int RemoveIndex = 0;
+                            string TempString = new string(TempArray);
+                            while ((RemoveIndex = TempString.IndexOf('\0')) > -1)
+                            {
+                                TempString = TempString.Remove(RemoveIndex, 1);
+                            }
+
+                            // The final effect of those two loops is that sIN(x) + cOs(X) becomes Sin(X) + Cos(X)
+
+                            // Now convert the char[] back into a string and put it in FuncEntryBox so that
+                            // everything works good and the user sees how to format it in the future
+                            FuncEntryBox.Text = TempString;
 
                             exp = new Expression(FuncEntryBox.Text);
-                            if (exp.HasErrors())
+
+                            // Test out the expression to catch any undefined variables
+                            // This method is much easier and faster than checking w/ a regex
+                            // because it's hard to find EXACTLY what I want :B
+                            try 
                             {
-                                MessageBox.Show("The function you entered is invalid.", "Function Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                // Give X some simple value to define it and don't define any
+                                // other variables
+                                exp.Parameters["X"] = 1;
+                                exp.Evaluate(); 
                             }
-                            else
+                            catch (ArgumentException ae)
                             {
-                                integ = new Integral(
-                                    function: exp,
-                                    Divisions: N,
-                                    Start: A,
-                                    End: B
-                                 );
+                                if (ae.Message.Contains("not defined"))
+                                {
+                                    MessageBox.Show("You can only use X as a variable!");
+                                    ExtraVariablesInExp = true;
+                                }
+                            }
+
+                            if (!ExtraVariablesInExp) 
+                            {
+                                if (exp.HasErrors())
+                                {
+                                    MessageBox.Show("The function you entered is invalid.", "Function Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                }
+                                else
+                                {
+                                    // THIS IS IT
+                                    // THE MEAT OF THE PROGRAM, RIGHT HERE
+                                    // FINALLY
+                                    integ = new Integral(
+                                        function: exp,
+                                        Divisions: N,
+                                        Start: A,
+                                        End: B
+                                     );
+                                }
                             }
                         }
                         else
@@ -352,6 +423,8 @@ namespace Integrate
 
         private void btnShowOptions_Click(object sender, EventArgs e)
         {
+            Console.Out.Flush();
+
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += (bwsender, bwe) => {
                 Application.Run(new OptionsForm());

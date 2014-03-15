@@ -15,21 +15,33 @@ namespace Integrate
         {
             InitializeComponent();
         }
-
-        // Local options to set and deal with
-        bool TrunkLines, CapLines, WireframeMode;
-        // Other options added here
-
-        private void chkCylWireframe_CheckedChanged(object sender, EventArgs e)
-        {
-            OptionBank.Wireframe = chkCylWireframe.Checked;
-        }
-
+        
         private void OptionsForm_Load(object sender, EventArgs e)
         {
-            chkCylWireframe.Checked = OptionBank.Wireframe;
+            // Get copies of the settings for easy of reference :V
+            double LocalSum = Properties.Settings.Default.ReimannSumLMR;
 
-            WireframeMode = OptionBank.Wireframe;
+            // Setting up the Reimann Mode radio buttons
+            if (LocalSum == 0) rbtnLeftSum.Checked = true;
+            else if (LocalSum == 0.5) rbtnMidSum.Checked = true;
+            else if (LocalSum == 1) rbtnRightSum.Checked = true;
+
+            // Set the integral drawing options to settings in memory
+            chkDrawIntegral.Checked = Properties.Settings.Default.DrawIntegral;
+            chkDrawOutlines.Checked = Properties.Settings.Default.DrawOutlines;
+        }
+
+        private void OptionsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Save the changed options
+            if (rbtnLeftSum.Checked) Properties.Settings.Default.ReimannSumLMR = 0;
+            else if (rbtnMidSum.Checked) Properties.Settings.Default.ReimannSumLMR = 0.5;
+            else if (rbtnRightSum.Checked) Properties.Settings.Default.ReimannSumLMR = 1;
+
+            Properties.Settings.Default.DrawIntegral = chkDrawIntegral.Checked;
+            Properties.Settings.Default.DrawOutlines = chkDrawOutlines.Checked;
+
+            Properties.Settings.Default.Save();
         }
     }
 }

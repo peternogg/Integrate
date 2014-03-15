@@ -25,13 +25,49 @@ namespace Integrate.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
-        public global::System.Drawing.Color Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ReimannSumLMR {
             get {
-                return ((global::System.Drawing.Color)(this["Setting"]));
+                return ((double)(this["ReimannSumLMR"]));
             }
             set {
-                this["Setting"] = value;
+                this["ReimannSumLMR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DrawIntegral {
+            get {
+                return ((bool)(this["DrawIntegral"]));
+            }
+            set {
+                this["DrawIntegral"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DrawOutlines {
+            get {
+                return ((bool)(this["DrawOutlines"]));
+            }
+            set {
+                this["DrawOutlines"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DrawSideOutlines {
+            get {
+                return ((bool)(this["DrawSideOutlines"]));
+            }
+            set {
+                this["DrawSideOutlines"] = value;
             }
         }
     }

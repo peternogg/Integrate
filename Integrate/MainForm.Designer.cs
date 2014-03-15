@@ -206,7 +206,7 @@
             this.txtLimA.Location = new System.Drawing.Point(51, 481);
             this.txtLimA.Name = "txtLimA";
             this.txtLimA.Size = new System.Drawing.Size(21, 20);
-            this.txtLimA.TabIndex = 4;
+            this.txtLimA.TabIndex = 5;
             this.txtLimA.Text = "-2";
             this.txtLimA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -215,7 +215,7 @@
             this.txtSubdiv.Location = new System.Drawing.Point(356, 471);
             this.txtSubdiv.Name = "txtSubdiv";
             this.txtSubdiv.Size = new System.Drawing.Size(21, 20);
-            this.txtSubdiv.TabIndex = 4;
+            this.txtSubdiv.TabIndex = 7;
             this.txtSubdiv.Text = "10";
             this.txtSubdiv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -234,7 +234,7 @@
             this.HelpBtn.Location = new System.Drawing.Point(716, 446);
             this.HelpBtn.Name = "HelpBtn";
             this.HelpBtn.Size = new System.Drawing.Size(75, 54);
-            this.HelpBtn.TabIndex = 7;
+            this.HelpBtn.TabIndex = 0;
             this.HelpBtn.Text = "Help!";
             this.HelpBtn.UseVisualStyleBackColor = true;
             // 
@@ -250,11 +250,10 @@
             // 
             // btnShowOptions
             // 
-            this.btnShowOptions.Enabled = false;
             this.btnShowOptions.Location = new System.Drawing.Point(635, 447);
             this.btnShowOptions.Name = "btnShowOptions";
             this.btnShowOptions.Size = new System.Drawing.Size(75, 54);
-            this.btnShowOptions.TabIndex = 7;
+            this.btnShowOptions.TabIndex = 0;
             this.btnShowOptions.Text = "Options";
             this.btnShowOptions.UseVisualStyleBackColor = true;
             this.btnShowOptions.Click += new System.EventHandler(this.btnShowOptions_Click);
@@ -264,7 +263,7 @@
             this.FuncEntryBox.Location = new System.Drawing.Point(136, 471);
             this.FuncEntryBox.Name = "FuncEntryBox";
             this.FuncEntryBox.Size = new System.Drawing.Size(161, 20);
-            this.FuncEntryBox.TabIndex = 9;
+            this.FuncEntryBox.TabIndex = 6;
             this.FuncEntryBox.Text = "x";
             // 
             // Viewport
@@ -327,6 +326,7 @@
             this.Controls.Add(this.CamControlBox);
             this.Controls.Add(this.Viewport);
             this.Controls.Add(this.label5);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Integrate";

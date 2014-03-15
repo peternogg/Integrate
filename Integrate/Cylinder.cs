@@ -80,45 +80,43 @@ namespace Integrate
         {
             int i = 0; // premptive init of i because there's a couple loops
                        // in here that use it (but one after the other)
-            if (!OptionBank.Wireframe)
+            GL.Color4(_Color);
+
+            // Draw the rear circle (even indices)
+            GL.Begin(PrimitiveType.Polygon);
             {
-                GL.Color4(_Color);
-
-                // Draw the rear circle (even indices)
-                GL.Begin(PrimitiveType.Polygon);
+                for (i = 0; i < Vertices.Length; i += 2)
                 {
-                    for (i = 0; i < Vertices.Length; i += 2)
-                    {
-                        GL.Vertex3(Vertices[i]);
-                    }
+                    GL.Vertex3(Vertices[i]);
                 }
-                GL.End();
-
-                // Draw the front circle (odd indices)
-                GL.Begin(PrimitiveType.Polygon);
-                {
-                    for (i = 1; i < Vertices.Length; i += 2)
-                    {
-                        GL.Vertex3(Vertices[i]);
-                    }
-                }
-                GL.End();
-
-                // Draw the connecting bits
-                GL.Begin(PrimitiveType.TriangleStrip);
-                {
-
-                    for (i = 0; i < Vertices.Length; i += 2)
-                    {
-                        GL.Vertex3(Vertices[i]);
-                        GL.Vertex3(Vertices[i + 1]);
-                    }
-                }
-                GL.End();
             }
+            GL.End();
+
+            // Draw the front circle (odd indices)
+            GL.Begin(PrimitiveType.Polygon);
+            {
+                for (i = 1; i < Vertices.Length; i += 2)
+                {
+                    GL.Vertex3(Vertices[i]);
+                }
+            }
+            GL.End();
+
+            // Draw the connecting bits
+            GL.Begin(PrimitiveType.TriangleStrip);
+            {
+
+                for (i = 0; i < Vertices.Length; i += 2)
+                {
+                    GL.Vertex3(Vertices[i]);
+                    GL.Vertex3(Vertices[i + 1]);
+                }
+            }
+            GL.End();
+        
             // Draw lines along the sides of the thing to give it contours
             // and junk til i can get shading figured out
-            else // if wireframe
+            if (Properties.Settings.Default.DrawSideOutlines)
             {
                 GL.Begin(PrimitiveType.Lines);
                 {
@@ -131,28 +129,30 @@ namespace Integrate
                 }
                 GL.End();
             }
-            
-            // Always draw caps
-            GL.Begin(PrimitiveType.LineLoop);
+            // If the user wants to draw outlines, do so
+            if (Properties.Settings.Default.DrawOutlines)
             {
                 GL.Color4(Color4.Black);
-                // Back circle
-                for (i = 0; i < Vertices.Length; i += 2)
+                GL.Begin(PrimitiveType.LineLoop);
                 {
-                    GL.Vertex3(MoveOutwards(Vertices[i]));
+                    // Back circle
+                    for (i = 0; i < Vertices.Length; i += 2)
+                    {
+                        GL.Vertex3(MoveOutwards(Vertices[i]));
+                    }
                 }
-            }
-            GL.End();
+                GL.End();
 
-            GL.Begin(PrimitiveType.LineLoop);
-            {
-                // Front circle
-                for (i = 1; i < Vertices.Length; i += 2)
+                GL.Begin(PrimitiveType.LineLoop);
                 {
-                    GL.Vertex3(MoveOutwards(Vertices[i]));
+                    // Front circle
+                    for (i = 1; i < Vertices.Length; i += 2)
+                    {
+                        GL.Vertex3(MoveOutwards(Vertices[i]));
+                    }
                 }
+                GL.End();
             }
-            GL.End();
         }
 
         private Vector3d MoveOutwards(Vector3d ToMove)
