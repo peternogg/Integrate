@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrate", "Integrate\Integrate.csproj", "{BCAD1985-34C5-4D38-BD80-A49110F45127}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAGLControlLib", "..\..\Documents\Visual Studio 2013\Projects\AAGLControlLib\AAGLControlLib\AAGLControlLib.csproj", "{E6A9AECC-C77B-44E6-B121-B3D9C1401C3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAGLControlLib", "Integrate\AAGLControlLib.csproj", "{E6A9AECC-C77B-44E6-B121-B3D9C1401C3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

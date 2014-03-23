@@ -109,12 +109,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Documents\Visual Studio 2013\Projects\AAGLControlLib\AAGLControlLib\AAGLControlLib.csproj">
-      <Project>{e6a9aecc-c77b-44e6-b121-b3d9c1401c3f}</Project>
-      <Name>AAGLControlLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -125,6 +119,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="AAGLControlLib.csproj">
+      <Project>{e6a9aecc-c77b-44e6-b121-b3d9c1401c3f}</Project>
+      <Name>AAGLControlLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
