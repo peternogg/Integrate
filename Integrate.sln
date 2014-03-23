@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrate", "Integrate\Inte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAGLControlLib", "Integrate\AAGLControlLib.csproj", "{E6A9AECC-C77B-44E6-B121-B3D9C1401C3F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A4A742D-41D4-43D9-A78D-A435E31D0244}"
+	ProjectSection(SolutionItems) = preProject
+		Integrate\NCalc.dll = Integrate\NCalc.dll
+		Integrate\OpenTK.dll = Integrate\OpenTK.dll
+		Integrate\OpenTK.GLControl.dll = Integrate\OpenTK.GLControl.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
