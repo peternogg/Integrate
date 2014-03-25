@@ -29,6 +29,8 @@ namespace Integrate
             // Set the integral drawing options to settings in memory
             chkDrawIntegral.Checked = Properties.Settings.Default.DrawIntegral;
             chkDrawOutlines.Checked = Properties.Settings.Default.DrawOutlines;
+
+            cmbShapeSelector.SelectedIndex = Properties.Settings.Default.IntegralShape;
         }
 
         private void OptionsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -40,6 +42,8 @@ namespace Integrate
 
             Properties.Settings.Default.DrawIntegral = chkDrawIntegral.Checked;
             Properties.Settings.Default.DrawOutlines = chkDrawOutlines.Checked;
+
+            Properties.Settings.Default.IntegralShape = cmbShapeSelector.SelectedIndex;
 
             Properties.Settings.Default.Save();
         }

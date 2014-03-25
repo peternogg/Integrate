@@ -4,50 +4,29 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-namespace Integrate
+namespace Integrate.Shapes
 {
-    class Cylinder
+    class Cylinder : Shape
     {
         // Number of vertices per circle is fixed at a number
         // Simplifies processing and increases speed
         const int nVertices = 32;
 
         // List of vertices that describe the circle
-        Vector3d[] Vertices = new Vector3d[2 * nVertices];
+        //Vector3d[] Vertices = new Vector3d[2 * nVertices];
 
         // attached to property below
-        private Color4 _Color = Color4.DarkSeaGreen;
-        public Color4 Color
+
+        public Cylinder(Vector3d Position, double Radius, double Height) : base(2 * nVertices, Position)
         {
-            get
-            {
-                return _Color;
-            }
-            set
-            {
-                _Color = value;
-            }
-        }
-
-        public Cylinder(Vector3d Position, double Radius, double Height)
-        {
-            // Probably won't happen but just to remind myself (catastrophically)
-            if (nVertices % 2 != 0) throw new IndexOutOfRangeException("nVertices must be a multiple of 2");
-
-
-            // Set all the vertices to the 'center' of the circle
-            // so that they can be added to later
-            for (int i = 0; i < Vertices.Length; i++)
-            {
-                Vertices[i] = (Vector3d)Position;
-            }
+            // Since Shapes does the work of setting up the vertices array, we can jump straight into calculating!
 
             // Run through and calculate the vertices relative to 
             // the position with r = Radius
-            CalcVertices(Radius, Height);
+            Calculate(Radius, Height);
         }
 
-        private void CalcVertices(double Radius, double Height)
+        protected override void Calculate(double Radius, double Height)
         {
             double theta = 0, dtheta = MathHelper.TwoPi / nVertices;
 
@@ -64,10 +43,6 @@ namespace Integrate
                 // an identical circle, but forward some
                 Vertices[i + 1].X += Height;
 
-//#if DEBUG
-//                Console.WriteLine("Back: {0}\tFront: {1}", Vertices[i], Vertices[i + 1]);
-//#endif
-
                 // Increment the angle measure
                 theta += dtheta;
             }
@@ -76,7 +51,7 @@ namespace Integrate
         /// <summary>
         /// Draw the cylinder as it's stored
         /// </summary>
-        public void Draw()
+        public override void Draw()
         {
             int i = 0; // premptive init of i because there's a couple loops
                        // in here that use it (but one after the other)
@@ -153,22 +128,6 @@ namespace Integrate
                 }
                 GL.End();
             }
-        }
-
-        private Vector3d MoveOutwards(Vector3d ToMove)
-        {
-            try
-            {
-                ToMove.Y += Math.Sign(ToMove.Y) * 0.001;
-                ToMove.Z += Math.Sign(ToMove.Z) * 0.001;
-            }
-                // Breaks on 1/x for some reason? gives ([decimal], NaN, Infinity) in ToMove
-            catch (ArithmeticException e)
-            {
-                Console.WriteLine("Error in MoveOutwards (probably because 1/x or smth");
-            }
-
-            return ToMove;
         }
     }
 }

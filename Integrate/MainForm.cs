@@ -431,6 +431,7 @@ namespace Integrate
             };
 
             bw.RunWorkerCompleted += (bwsender, bwe) => {
+                integ.Recalculate();
                 Viewport.Invalidate();
             };
 

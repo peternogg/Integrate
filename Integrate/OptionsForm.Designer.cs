@@ -34,6 +34,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkDrawIntegral = new System.Windows.Forms.CheckBox();
             this.chkDrawOutlines = new System.Windows.Forms.CheckBox();
+            this.cmbShapeSelector = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // rbtnLeftSum
@@ -100,11 +102,33 @@
             this.chkDrawOutlines.Text = "Draw Shape Outlines";
             this.chkDrawOutlines.UseVisualStyleBackColor = true;
             // 
+            // cmbShapeSelector
+            // 
+            this.cmbShapeSelector.FormattingEnabled = true;
+            this.cmbShapeSelector.Items.AddRange(new object[] {
+            "Cylinder",
+            "Flat Rectangle"});
+            this.cmbShapeSelector.Location = new System.Drawing.Point(16, 168);
+            this.cmbShapeSelector.Name = "cmbShapeSelector";
+            this.cmbShapeSelector.Size = new System.Drawing.Size(256, 21);
+            this.cmbShapeSelector.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 149);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(76, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Integral Shape";
+            // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cmbShapeSelector);
             this.Controls.Add(this.chkDrawOutlines);
             this.Controls.Add(this.chkDrawIntegral);
             this.Controls.Add(this.label1);
@@ -128,6 +152,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkDrawIntegral;
         private System.Windows.Forms.CheckBox chkDrawOutlines;
+        private System.Windows.Forms.ComboBox cmbShapeSelector;
+        private System.Windows.Forms.Label label2;
 
     }
 }

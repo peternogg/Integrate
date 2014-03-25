@@ -7,13 +7,16 @@ using OpenTK.Graphics.OpenGL;
 
 using NCalc;
 
+// Import the shapes folder/library in this project
+using Integrate.Shapes;
+
 namespace Integrate
 {
     class Integral
     {
         // 2-element vectors are smaller and so consume less space
         Vector2d[] GraphPoints; // The (x,y) points of the line of the function
-        Cylinder[] Disks; // The disks made from that function
+        Shape[] Shapes; // The Shapes made from that function
         Color4 _Color = Color4.LightGray; // The color of the line (cylinders handle their own color)
         double ReimannSetting = 0; // A local copy of the reimann setting so that a) I don't have to retype the thing every time and 
                                    //                                             b) so I can check if it's changed and recalculate if it has
@@ -26,7 +29,8 @@ namespace Integrate
         {
             // Set up the storage containers
             GraphPoints = new Vector2d[Divisions + 1];
-            Disks = new Cylinder[Divisions + 1];
+            Shapes = new Shape[Divisions + 1];
+            //Shapes = new Cylinder[Divisions + 1];
 
             // Save the input info for later
             SavedFunction = function;
@@ -56,7 +60,7 @@ namespace Integrate
             // Position to create the cylinder at
             Vector3d currPos = new Vector3d(Start, 0, 0);
 
-            for (int i = 0; i < Disks.Length; i++)
+            for (int i = 0; i < Shapes.Length; i++)
             {
                 // CurrPos is the distance along the X axis
                 // GraphPoints is the radius of the cylinder
@@ -64,7 +68,12 @@ namespace Integrate
                 // TODO: Fix the calculations; there's something up that's making it 
                 // act really weird (not in the right place)
                 F.Parameters["X"] = Start + ((i - ReimannSetting) * dx);
-                Disks[i] = new Cylinder(currPos, Convert.ToDouble(F.Evaluate()), dx);
+
+                switch (Properties.Settings.Default.IntegralShape) {
+                    case 0: Shapes[i] = new Cylinder(currPos, Convert.ToDouble(F.Evaluate()), dx); break;
+                    case 1: Shapes[i] = new FlatRectangle(currPos, dx, Convert.ToDouble(F.Evaluate())); break;
+                }
+
                 // Is it possible to do async constructors? Because it might help
                 // with speed a bit.
 
@@ -74,6 +83,11 @@ namespace Integrate
             }
 
             // Everything's made and done, cool!
+        }
+
+        public void Recalculate()
+        {
+            Calculate(SavedFunction, Divisions, Start, End);
         }
 
         public void Draw()
@@ -108,11 +122,18 @@ namespace Integrate
             if (Properties.Settings.Default.DrawIntegral)
             {
                 // Now draw all of the cylinders that we've made
-                for (int i = 0; i < Disks.Length; i++)
+                for (int i = 0; i < Shapes.Length; i++)
                 {
-                    Disks[i].Draw();
+                    Shapes[i].Draw();
                 }
             }
+        }
+
+        public double Evaluate()
+        {
+            double output = 0;
+
+            return output;
         }
     }
 }

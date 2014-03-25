@@ -70,5 +70,17 @@ namespace Integrate.Properties {
                 this["DrawSideOutlines"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int IntegralShape {
+            get {
+                return ((int)(this["IntegralShape"]));
+            }
+            set {
+                this["IntegralShape"] = value;
+            }
+        }
     }
 }
