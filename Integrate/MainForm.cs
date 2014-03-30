@@ -74,6 +74,8 @@ namespace Integrate
                 Start: -2,
                 End: 2);
 
+            IntegValueDisplay.Text = Math.Round(integ.Evaluate(), 4).ToString();
+
             // Draw the first frame on the viewport
             Viewport.Invalidate();
         }
@@ -301,6 +303,9 @@ namespace Integrate
                                         Start: A,
                                         End: B
                                      );
+                                    
+                                    // Evaluate the integral using simpson's rule in the class
+                                    IntegValueDisplay.Text = Math.Round(integ.Evaluate(), 4).ToString();
                                 }
                             }
                         }
@@ -431,6 +436,7 @@ namespace Integrate
             };
 
             bw.RunWorkerCompleted += (bwsender, bwe) => {
+                // Recalc to get the new shapes
                 integ.Recalculate();
                 Viewport.Invalidate();
             };

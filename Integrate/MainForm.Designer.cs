@@ -53,6 +53,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.IntegValueDisplay = new System.Windows.Forms.Label();
             this.CamControlBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -306,11 +307,21 @@
             this.label7.TabIndex = 3;
             this.label7.Text = "f(x) =";
             // 
+            // IntegValueDisplay
+            // 
+            this.IntegValueDisplay.AutoSize = true;
+            this.IntegValueDisplay.Location = new System.Drawing.Point(136, 493);
+            this.IntegValueDisplay.Name = "IntegValueDisplay";
+            this.IntegValueDisplay.Size = new System.Drawing.Size(35, 13);
+            this.IntegValueDisplay.TabIndex = 9;
+            this.IntegValueDisplay.Text = "label8";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 512);
+            this.Controls.Add(this.IntegValueDisplay);
             this.Controls.Add(this.FuncEntryBox);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.btnShowOptions);
@@ -365,6 +376,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label IntegValueDisplay;
 
     }
 }

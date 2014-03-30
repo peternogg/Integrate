@@ -67,7 +67,7 @@ namespace Integrate
                 // and dx is how long it is, along the x axis
                 // TODO: Fix the calculations; there's something up that's making it 
                 // act really weird (not in the right place)
-                F.Parameters["X"] = Start + ((i - ReimannSetting) * dx);
+                F.Parameters["X"] = Start + ((i + ReimannSetting) * dx);
 
                 switch (Properties.Settings.Default.IntegralShape) {
                     case 0: Shapes[i] = new Cylinder(currPos, Convert.ToDouble(F.Evaluate()), dx); break;
@@ -85,6 +85,9 @@ namespace Integrate
             // Everything's made and done, cool!
         }
 
+        /// <summary>
+        /// Just recalculate the integral with current values to update the shapes
+        /// </summary>
         public void Recalculate()
         {
             Calculate(SavedFunction, Divisions, Start, End);
@@ -129,11 +132,33 @@ namespace Integrate
             }
         }
 
+        // TODO: Not done yet. Fix it when less tired.
         public double Evaluate()
         {
-            double output = 0;
+            double dx = (End - Start) / Divisions, accum = 0, newdx = dx / 3;
+            int n = 800;
 
-            return output;
+            double[] Values = new double[n + 1];
+            // Starts at 0 and goes to b (from dx * n)
+            for (int k = 0; k <= n; k++) {
+                SavedFunction.Parameters["X"] = k * dx;
+                Values[k] = Convert.ToDouble(SavedFunction.Evaluate());
+            }
+
+            accum += Values[0];
+            // this loop goes from Values[1] to Values[MaxK - 1] or Values[Length - 2]
+            // since < doesn't include the number, [MaxK] is never accessed
+            for (int i = 1; i < Values.Length - 1; i++) {
+                // if i is an EVEN number then it's multiplied by 2 and stored
+                // if it's odd, it's multiplied by 4 and stored
+                if (i % 2 == 0) accum += (Values[i] *= 2);
+                else accum += (Values[i] *= 4);
+            }
+            accum += Values[Values.Length - 1];
+            // Multiply everything by a third of dx and store it back into accum
+            accum *= newdx;
+
+            return accum;
         }
     }
 }
