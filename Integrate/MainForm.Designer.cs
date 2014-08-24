@@ -39,22 +39,15 @@
             this.CamFwdBtn = new System.Windows.Forms.Button();
             this.CamBackBtn = new System.Windows.Forms.Button();
             this.CamLeftBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.txtLimB = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtLimA = new System.Windows.Forms.TextBox();
             this.txtSubdiv = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.HelpBtn = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
-            this.btnShowOptions = new System.Windows.Forms.Button();
             this.FuncEntryBox = new System.Windows.Forms.TextBox();
             this.Viewport = new AAGLControlLib.AAGLControl();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.IntegValueDisplay = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CamControlBox.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CamControlBox
@@ -69,7 +62,7 @@
             this.CamControlBox.Controls.Add(this.CamFwdBtn);
             this.CamControlBox.Controls.Add(this.CamBackBtn);
             this.CamControlBox.Controls.Add(this.CamLeftBtn);
-            this.CamControlBox.Location = new System.Drawing.Point(582, 13);
+            this.CamControlBox.Location = new System.Drawing.Point(808, 12);
             this.CamControlBox.Name = "CamControlBox";
             this.CamControlBox.Size = new System.Drawing.Size(218, 424);
             this.CamControlBox.TabIndex = 1;
@@ -175,36 +168,19 @@
             this.CamLeftBtn.UseVisualStyleBackColor = true;
             this.CamLeftBtn.Click += new System.EventHandler(this.CamLeftBtn_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(133, 455);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(85, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Enter a Function";
-            // 
             // txtLimB
             // 
-            this.txtLimB.Location = new System.Drawing.Point(51, 455);
+            this.txtLimB.Location = new System.Drawing.Point(44, 105);
             this.txtLimB.Name = "txtLimB";
             this.txtLimB.Size = new System.Drawing.Size(21, 20);
             this.txtLimB.TabIndex = 4;
             this.txtLimB.Text = "2";
             this.txtLimB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 474);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Limits";
+            this.txtLimB.Enter += new System.EventHandler(this.LimitBoxes_Enter);
             // 
             // txtLimA
             // 
-            this.txtLimA.Location = new System.Drawing.Point(51, 481);
+            this.txtLimA.Location = new System.Drawing.Point(44, 131);
             this.txtLimA.Name = "txtLimA";
             this.txtLimA.Size = new System.Drawing.Size(21, 20);
             this.txtLimA.TabIndex = 5;
@@ -213,35 +189,16 @@
             // 
             // txtSubdiv
             // 
-            this.txtSubdiv.Location = new System.Drawing.Point(356, 471);
+            this.txtSubdiv.Location = new System.Drawing.Point(6, 377);
             this.txtSubdiv.Name = "txtSubdiv";
             this.txtSubdiv.Size = new System.Drawing.Size(21, 20);
             this.txtSubdiv.TabIndex = 7;
             this.txtSubdiv.Text = "10";
             this.txtSubdiv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(383, 474);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(113, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Subdivisions/Cylinders";
-            // 
-            // HelpBtn
-            // 
-            this.HelpBtn.Enabled = false;
-            this.HelpBtn.Location = new System.Drawing.Point(716, 446);
-            this.HelpBtn.Name = "HelpBtn";
-            this.HelpBtn.Size = new System.Drawing.Size(75, 54);
-            this.HelpBtn.TabIndex = 0;
-            this.HelpBtn.Text = "Help!";
-            this.HelpBtn.UseVisualStyleBackColor = true;
-            // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(512, 443);
+            this.btnApply.Location = new System.Drawing.Point(152, 349);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(64, 64);
             this.btnApply.TabIndex = 8;
@@ -249,19 +206,9 @@
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
-            // btnShowOptions
-            // 
-            this.btnShowOptions.Location = new System.Drawing.Point(635, 447);
-            this.btnShowOptions.Name = "btnShowOptions";
-            this.btnShowOptions.Size = new System.Drawing.Size(75, 54);
-            this.btnShowOptions.TabIndex = 0;
-            this.btnShowOptions.Text = "Options";
-            this.btnShowOptions.UseVisualStyleBackColor = true;
-            this.btnShowOptions.Click += new System.EventHandler(this.btnShowOptions_Click);
-            // 
             // FuncEntryBox
             // 
-            this.FuncEntryBox.Location = new System.Drawing.Point(136, 471);
+            this.FuncEntryBox.Location = new System.Drawing.Point(36, 252);
             this.FuncEntryBox.Name = "FuncEntryBox";
             this.FuncEntryBox.Size = new System.Drawing.Size(161, 20);
             this.FuncEntryBox.TabIndex = 6;
@@ -270,7 +217,7 @@
             // Viewport
             // 
             this.Viewport.BackColor = System.Drawing.Color.Black;
-            this.Viewport.Location = new System.Drawing.Point(13, 13);
+            this.Viewport.Location = new System.Drawing.Point(239, 12);
             this.Viewport.Name = "Viewport";
             this.Viewport.Size = new System.Drawing.Size(563, 424);
             this.Viewport.TabIndex = 0;
@@ -279,64 +226,28 @@
             this.Viewport.Paint += new System.Windows.Forms.PaintEventHandler(this.Viewport_Paint);
             this.Viewport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Viewport_KeyPress);
             // 
-            // label5
+            // groupBox1
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(78, 448);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 55);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "∫";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(321, 474);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "With";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(100, 474);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(30, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "f(x) =";
-            // 
-            // IntegValueDisplay
-            // 
-            this.IntegValueDisplay.AutoSize = true;
-            this.IntegValueDisplay.Location = new System.Drawing.Point(136, 493);
-            this.IntegValueDisplay.Name = "IntegValueDisplay";
-            this.IntegValueDisplay.Size = new System.Drawing.Size(35, 13);
-            this.IntegValueDisplay.TabIndex = 9;
-            this.IntegValueDisplay.Text = "label8";
+            this.groupBox1.Controls.Add(this.txtSubdiv);
+            this.groupBox1.Controls.Add(this.FuncEntryBox);
+            this.groupBox1.Controls.Add(this.txtLimA);
+            this.groupBox1.Controls.Add(this.txtLimB);
+            this.groupBox1.Controls.Add(this.btnApply);
+            this.groupBox1.Location = new System.Drawing.Point(15, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(218, 424);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Camera Controls";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 512);
-            this.Controls.Add(this.IntegValueDisplay);
-            this.Controls.Add(this.FuncEntryBox);
-            this.Controls.Add(this.btnApply);
-            this.Controls.Add(this.btnShowOptions);
-            this.Controls.Add(this.HelpBtn);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtSubdiv);
-            this.Controls.Add(this.txtLimA);
-            this.Controls.Add(this.txtLimB);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(1043, 453);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.CamControlBox);
             this.Controls.Add(this.Viewport);
-            this.Controls.Add(this.label5);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
@@ -344,8 +255,9 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.CamControlBox.ResumeLayout(false);
             this.CamControlBox.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -359,24 +271,16 @@
         private System.Windows.Forms.Button ToggleModeButton;
         private System.Windows.Forms.Button CamRightBtn;
         private System.Windows.Forms.Button CamResetBtn;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtLimB;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtLimA;
         private System.Windows.Forms.TextBox txtSubdiv;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button HelpBtn;
         private System.Windows.Forms.Button btnApply;
-        private System.Windows.Forms.Button btnShowOptions;
         private System.Windows.Forms.Button CamFwdBtn;
         private System.Windows.Forms.Button CamBackBtn;
         private System.Windows.Forms.Label PanRotLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox FuncEntryBox;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label IntegValueDisplay;
+        private System.Windows.Forms.GroupBox groupBox1;
 
     }
 }

@@ -25,11 +25,17 @@ namespace Integrate
         int Divisions; // The number of subdivisions in use for calculation
         double Start, End; // The limits of integration (a and b)
 
+        public enum IntegralTypes
+        {
+            CYLINDER,
+            FLAT_RECTANGLE
+        }
+
         public Integral(Expression function, int Divisions, double Start, double End)
         {
             // Set up the storage containers
             GraphPoints = new Vector2d[Divisions + 1];
-            Shapes = new Shape[Divisions + 1];
+            Shapes = new Shape[Divisions];
             //Shapes = new Cylinder[Divisions + 1];
 
             // Save the input info for later
@@ -70,8 +76,10 @@ namespace Integrate
                 F.Parameters["X"] = Start + ((i + ReimannSetting) * dx);
 
                 switch (Properties.Settings.Default.IntegralShape) {
-                    case 0: Shapes[i] = new Cylinder(currPos, Convert.ToDouble(F.Evaluate()), dx); break;
-                    case 1: Shapes[i] = new FlatRectangle(currPos, dx, Convert.ToDouble(F.Evaluate())); break;
+                    // They're already 'ints' but the type isn't right so it's gotta be converted
+                    // They're stored as ints tho so it all works out
+                    case (int)IntegralTypes.CYLINDER       : Shapes[i] = new Cylinder(currPos, Convert.ToDouble(F.Evaluate()), dx);      break;
+                    case (int)IntegralTypes.FLAT_RECTANGLE : Shapes[i] = new FlatRectangle(currPos, dx, Convert.ToDouble(F.Evaluate())); break;
                 }
 
                 // Is it possible to do async constructors? Because it might help
@@ -132,19 +140,30 @@ namespace Integrate
             }
         }
 
-        // TODO: Not done yet. Fix it when less tired.
         public double Evaluate()
         {
-            double dx = (End - Start) / Divisions, accum = 0, newdx = dx / 3;
-            int n = 800;
+            // Start by building the values to use
+            // with n + 10,000 for LOTSA ACCURACY
+            int n = 10000; double dx = (End - Start) / n;
 
+            double[] Vals = MakeYValues(dx, n);
+            return Simpson(Vals, dx);
+        }
+        private double[] MakeYValues(double dx, int n)
+        {
             double[] Values = new double[n + 1];
             // Starts at 0 and goes to b (from dx * n)
             for (int k = 0; k <= n; k++) {
-                SavedFunction.Parameters["X"] = k * dx;
+                SavedFunction.Parameters["X"] = Start + (k * dx);
                 Values[k] = Convert.ToDouble(SavedFunction.Evaluate());
             }
 
+            return Values;
+        }
+        private double Simpson(double[] Values, double dx)
+        {
+            double accum = 0;
+            // Add the first and last values which are always multiplied by 1
             accum += Values[0];
             // this loop goes from Values[1] to Values[MaxK - 1] or Values[Length - 2]
             // since < doesn't include the number, [MaxK] is never accessed
@@ -155,10 +174,12 @@ namespace Integrate
                 else accum += (Values[i] *= 4);
             }
             accum += Values[Values.Length - 1];
+            double temp = dx / 3;
             // Multiply everything by a third of dx and store it back into accum
-            accum *= newdx;
+            accum *= temp;
 
-            return accum;
+            // the final result
+            return Math.Round(accum, 8);
         }
     }
 }

@@ -5,9 +5,6 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Windows.Forms;
 
-// for MessageBox
-using Microsoft.VisualBasic;
-
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -27,7 +24,7 @@ namespace Integrate
         Expression exp = new Expression("X");
         float CamMoveSpeed = 0.1f, CamRotateSpeed = MathHelper.PiOver6 / 4f;
         bool RotateCameraMode = false;
-        
+        const int DEFAULT_SUBDIVISONS = 10;
 
         // Primary form loading event
         private void MainForm_Load(object sender, EventArgs e)
@@ -67,14 +64,14 @@ namespace Integrate
             // same function in this list. That is, index 0 (f(x) = x) is
             // the index of x => return x; here.
 
-            // Setup the initial integral
+            // Set up the initial integral
             integ = new Integral(
                 function: exp,
                 Divisions: 10,
                 Start: -2,
                 End: 2);
 
-            IntegValueDisplay.Text = Math.Round(integ.Evaluate(), 4).ToString();
+            //IntegValueDisplay.Text = Math.Round(integ.Evaluate(), 4).ToString();
 
             // Draw the first frame on the viewport
             Viewport.Invalidate();
@@ -198,19 +195,29 @@ namespace Integrate
             Console.WriteLine(e.KeyChar);
         }
 
+        private void ShowError(string ErrorText)
+        {
+            MessageBox.Show(ErrorText, "Error!", MessageBoxButtons.OK);
+        }
+
+        private void CheckLimitsValid(string Limit)
+        {
+            if (!Regex.Match(Limit, @"\d+").Success) {
+
+            } else {
+
+            }
+        }
+
         private void btnApply_Click(object sender, EventArgs e)
         {
             float A, B;
             int N;
             bool ExtraVariablesInExp = false;
+            // If the subdivisons box is empty, set it to the default value
+            if (txtSubdiv.Text == "") txtSubdiv.Text = DEFAULT_SUBDIVISONS.ToString();
 
-            if (txtLimA.Text == "" || txtLimB.Text == "" || txtSubdiv.Text == "")
-            {
-                MessageBox.Show("You can't have blank limits!", "Error", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                // Nothing else is executed and the frame is
-                // refreshed with current values
-            }
+            
             else if (float.TryParse(txtLimA.Text, out A)) 
             {
                 if (float.TryParse(txtLimB.Text, out B))
@@ -305,7 +312,7 @@ namespace Integrate
                                      );
                                     
                                     // Evaluate the integral using simpson's rule in the class
-                                    IntegValueDisplay.Text = Math.Round(integ.Evaluate(), 4).ToString();
+                                    EvalIntegral();
                                 }
                             }
                         }
@@ -338,6 +345,34 @@ namespace Integrate
 
             // Request a frame refresh
             Viewport.Invalidate();
+        }
+
+
+        private void EvalIntegral()
+        {
+            // Evaluates the integral, assuming that it's flat
+            // that is, it doesn't take into account what exactly the integral is displayed as
+            // it only evaluates the graph of the integral
+            double FirstEval = integ.Evaluate();
+            string FinalResult = "";
+
+            // If there's a cylinder, then it shows 2 * (pi) * Evaluate(), then the approx. value in parenthesis
+            // so 2π·Number (approx.)
+            // While with a flat rectangle, it'll just be the number returned by FirstEval
+
+            switch (Properties.Settings.Default.IntegralShape) {
+                // But here, add in the 2 * pi bit
+                case (int)Integral.IntegralTypes.CYLINDER:
+                    FinalResult = "2π·" + Math.Round(FirstEval, 5).ToString()
+                        + "(~" + Math.Round(FirstEval * 2 * Math.PI, 5).ToString() + ")";
+                    break;
+                // Do nothing for this one since it's basically what Evaluate() does anyway
+                case (int)Integral.IntegralTypes.FLAT_RECTANGLE:
+                    FinalResult = Math.Round(FirstEval, 5).ToString();
+                    break;
+            }
+
+            // Display value via something
         }
 
         private void CamUpBtn_Click(object sender, EventArgs e)
@@ -426,24 +461,6 @@ namespace Integrate
             }
         }
 
-        private void btnShowOptions_Click(object sender, EventArgs e)
-        {
-            Console.Out.Flush();
-
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += (bwsender, bwe) => {
-                Application.Run(new OptionsForm());
-            };
-
-            bw.RunWorkerCompleted += (bwsender, bwe) => {
-                // Recalc to get the new shapes
-                integ.Recalculate();
-                Viewport.Invalidate();
-            };
-
-            bw.RunWorkerAsync();
-        }
-
         private void CamFwdBtn_Click(object sender, EventArgs e)
         {
             // Doesn't deal with toggle stuff
@@ -455,6 +472,13 @@ namespace Integrate
         {
             CameraMove(0f, 0f, CamMoveSpeed);
             Viewport.Invalidate();
+        }
+
+        private void LimitBoxes_Enter(object sender, EventArgs e)
+        {
+            // Fuck you microsoft I don't need your shitty objects B)
+            TextBox Sender = (TextBox)sender;
+            Sender.ForeColor = Color.Black;
         }
     }
 }
