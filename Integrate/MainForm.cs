@@ -200,25 +200,127 @@ namespace Integrate
             MessageBox.Show(ErrorText, "Error!", MessageBoxButtons.OK);
         }
 
-        private void CheckLimitsValid(string Limit)
+        /// <summary>
+        /// Reformats a string expression for NCalc to accept
+        /// by ensuring that only the first letter of every word is
+        /// capitalized. 
+        /// </summary>
+        /// <param name="Exp"></param>
+        /// <returns></returns>
+        private string FixExpression(string Exp)
         {
-            if (!Regex.Match(Limit, @"\d+").Success) {
+            char[] TempArray = Exp.ToCharArray();
 
-            } else {
-
+            // Have regex find the beginnings of words (space or not) and put them into m
+            foreach (Match m in Regex.Matches(Exp, @"\w+"))
+            {
+                // TempArray is a 1:1 copy of FuncEntryBox.Text but in a different type
+                // so indexing into it gives the same result as indexing into .Text
+                // which is to say that it's the same character in the same spot
+                TempArray[m.Index] = Char.ToUpper(Exp[m.Index]);
+                // This bit takes that character and UpperCases it if it's at the beginning
+                // of a word, then stores it at the same place it came from in TempArray
+                // The result is that x + sin(x) becomes X + Sin(X)
             }
+
+            // Next up we have to make sure that all of the non-beginning characters are lower-case
+            foreach (Match m in Regex.Matches(Exp, @"\B\w+"))
+            {
+                // Starting at the index of the match, go to the match + the length of that matching string
+                for (int i = m.Index; i < (m.Index + m.Length); i++)
+                {
+                    TempArray[i] = Char.ToLower(Exp[i]);
+                }
+            }
+
+            // This loop removes and non-word values that aren't +, -, *, \, a space or parenthesis
+            foreach (Match m in Regex.Matches(Exp, @"(?(\W)[^\+\-\/\*\s\(\)]|\W)"))
+            {
+                TempArray[m.Index] = '\0';
+            }
+            int RemoveIndex = 0;
+            string TempString = new string(TempArray);
+            while ((RemoveIndex = TempString.IndexOf('\0')) > -1)
+            {
+                TempString = TempString.Remove(RemoveIndex, 1);
+            }
+
+            // The final effect of those two loops is that sIN(x) + cOs(X) becomes Sin(X) + Cos(X)
+            // And, in general, the first letter of any word becomes capitalized, while all of the rest
+            // are lower-cased. Anyway, now that we have everthing ready, send it back as a new string
+
+            return new string(TempArray);
+
+        }
+
+        private bool VerifyEquationIsGood(string Equation)
+        {
+            bool Error = false;
+            exp = new Expression(Equation);
+            // Test out the expression to catch any undefined variables
+            // This method is much easier and faster than checking w/ a regex
+            // because it's hard to find EXACTLY what I want :B
+            try
+            {
+                // Give X some simple value to define it and don't define any
+                // other variables
+                exp.Parameters["X"] = 1;
+                exp.Evaluate();
+            }
+            catch (ArgumentException ae)
+            {
+                if (ae.Message.Contains("not defined"))
+                {
+                    ShowError("Undefined variable found; only x/X may be used.");
+                    Error = true;
+                }
+            }
+
+            return Error;
         }
 
         private void btnApply_Click(object sender, EventArgs e)
         {
+            /*\
+             
+             NOTE: there's gotos here but they all go to one place okay step off the linux kernel does it it's cool man
+                          
+            \*/
+
             float A, B;
             int N;
-            bool ExtraVariablesInExp = false;
+
+
             // If the subdivisons box is empty, set it to the default value
             if (txtSubdiv.Text == "") txtSubdiv.Text = DEFAULT_SUBDIVISONS.ToString();
 
+            // Check limit A, limit B and the subdivisions individually, using the same method
+            if (!float.TryParse(txtLimA.Text, out A)) {
+                // Todo: Better error message?
+                ShowError("Limit A is invalid!");
+                goto ERROR;
+            }
+            if (!float.TryParse(txtLimB.Text, out B)) {
+                ShowError("Limit B is invalid!");
+                goto ERROR;
+            }
+            if (!int.TryParse(txtSubdiv.Text, out N)) {
+                ShowError("Subdivisons is invalid!");
+                goto ERROR;
+            }
+
+            // Check that the function entered is good
+            string Exp = FuncEntryBox.Text;
+            if (FuncEntryBox.Text != "") Exp = FixExpression(Exp);
+            else ShowError("You need to enter a function in the box.");
+
+// ------------- If anything goes wrong, hop down here and quit checking. 
+        ERROR:
+            // Extra error stuff?
+            return;
             
-            else if (float.TryParse(txtLimA.Text, out A)) 
+            #region Old Junk
+            /*else if (float.TryParse(txtLimA.Text, out A)) 
             {
                 if (float.TryParse(txtLimB.Text, out B))
                 {
@@ -345,6 +447,8 @@ namespace Integrate
 
             // Request a frame refresh
             Viewport.Invalidate();
+        */
+            #endregion
         }
 
 
