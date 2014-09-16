@@ -310,8 +310,12 @@ namespace Integrate
             }
 
             // Check that the function entered is good
-            string Exp = FuncEntryBox.Text;
-            if (FuncEntryBox.Text != "") Exp = FixExpression(Exp);
+            if (FuncEntryBox.Text != "") {
+                string Exp = FuncEntryBox.Text;
+                if (VerifyEquationIsGood(Exp)) {
+                    Exp = FixExpression(Exp);
+                }
+            }
             else ShowError("You need to enter a function in the box.");
 
 // ------------- If anything goes wrong, hop down here and quit checking. 
