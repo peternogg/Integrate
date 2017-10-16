@@ -7,10 +7,10 @@ namespace ExpressionParser {
     public class InfixParser : IParser {
         public Expression ParseExpression(string infixExpression) {
             // First: Tokenize the entire string
-            var output = new Queue<IToken>();
-            var operators = new Stack<IToken>();
+            var output = new Queue<Token>();
+            var operators = new Stack<Token>();
             InfixTokenizer tokenizer = new InfixTokenizer(infixExpression);
-            IToken currentToken;
+            Token currentToken;
 
             while (tokenizer.HasTokens) {
                 currentToken = tokenizer.ConsumeToken();
@@ -29,10 +29,10 @@ namespace ExpressionParser {
             while (operators.Count > 0)
                 output.Enqueue(operators.Pop());
 
-            return new Expression(new Stack<IToken>(output));
+            return new Expression(new Stack<Token>(output));
         }
 
-        private void HandleRightParen(Queue<IToken> output, Stack<IToken> operators) {
+        private void HandleRightParen(Queue<Token> output, Stack<Token> operators) {
             while (!(operators.Peek() is LeftParenthesisToken))
                 output.Enqueue(operators.Pop());
 
@@ -43,7 +43,7 @@ namespace ExpressionParser {
                 throw new Exception("Mismatched parenthesis");
         }
 
-        private void HandleOperator(OperatorToken currentToken, Queue<IToken> output, Stack<IToken> operators) {
+        private void HandleOperator(OperatorToken currentToken, Queue<Token> output, Stack<Token> operators) {
             if (operators.Count > 0) {
                 OperatorToken operatorsTop = (OperatorToken)operators.Peek();
 

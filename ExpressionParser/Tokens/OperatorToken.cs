@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpressionParser.Tokens {
-    public struct OperatorToken : IToken {
-        public string Text { get; private set; }
+    public class OperatorToken : Token {
         public int Precedence { get; private set; }
         public bool LeftAssociative => Text != "^"; // Exponent is the only right associative operator
 
@@ -18,9 +17,8 @@ namespace ExpressionParser.Tokens {
             { "^", 3 }
         };
 
-        public OperatorToken(string TokenString) {
-            this.Text = TokenString.Trim();
-            this.Precedence = PrecedenceFor[Text];
+        public OperatorToken(string Text) : base(Text) {
+            this.Precedence = PrecedenceFor[this.Text];
         }
     }
 }

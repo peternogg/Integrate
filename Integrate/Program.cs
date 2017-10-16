@@ -14,10 +14,6 @@ namespace Integrate
         [STAThread]
         static void Main()
         {
-            Expression ex = new InfixParser().ParseExpression("1 + 2 + 3");
-            
-
-            return;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

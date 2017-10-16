@@ -8,9 +8,9 @@ namespace ExpressionParser {
     using Tokens;
 
     public class Expression {
-        private readonly Stack<IToken> _tokenStack;
+        private readonly Stack<Token> _tokenStack;
 
-        internal Expression(Stack<IToken> tokenStack) {
+        internal Expression(Stack<Token> tokenStack) {
             _tokenStack = tokenStack;
         }
 

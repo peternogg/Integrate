@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpressionParser.Tokens {
-    public struct FunctionToken : IToken {
-        public string Text { get; private set; }
+    public class FunctionToken : Token {
 
-        public FunctionToken(string Text) {
-            this.Text = Text;
+        public FunctionToken(string Text) : base(Text) {
+
         }
     }
 }

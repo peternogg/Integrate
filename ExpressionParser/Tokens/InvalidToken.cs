@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpressionParser.Tokens {
-    public class InvalidToken : IToken {
-        public string Text => string.Empty;
+    public class InvalidToken : Token {
+        public InvalidToken() : base(String.Empty) {
+
+        }
     }
 }

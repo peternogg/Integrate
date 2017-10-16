@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpressionParser.Tokens {
-    class EndOfExpressionToken : IToken {
-        public string Text => string.Empty;
+    public class EndOfExpressionToken : Token {
+        public EndOfExpressionToken() : base(String.Empty) {
+
+        }
     }
 }

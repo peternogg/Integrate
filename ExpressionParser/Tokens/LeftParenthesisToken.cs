@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpressionParser.Tokens {
-    class LeftParenthesisToken : IToken {
-        public string Text => "(";
+    public class LeftParenthesisToken : Token {
+        public LeftParenthesisToken() : base(")") {
+
+        }
     }
 }
