@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrate", "Integrate\Integrate.csproj", "{BCAD1985-34C5-4D38-BD80-A49110F45127}"
 EndProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Integrate\OpenTK.dll = Integrate\OpenTK.dll
 		Integrate\OpenTK.GLControl.dll = Integrate\OpenTK.GLControl.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionParser", "ExpressionParser\ExpressionParser.csproj", "{A71E1C01-D402-4F31-B373-C6D0F2139F46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,10 @@ Global
 		{E6A9AECC-C77B-44E6-B121-B3D9C1401C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6A9AECC-C77B-44E6-B121-B3D9C1401C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6A9AECC-C77B-44E6-B121-B3D9C1401C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A71E1C01-D402-4F31-B373-C6D0F2139F46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A71E1C01-D402-4F31-B373-C6D0F2139F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A71E1C01-D402-4F31-B373-C6D0F2139F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A71E1C01-D402-4F31-B373-C6D0F2139F46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -39,8 +39,8 @@
             this.CamFwdBtn = new System.Windows.Forms.Button();
             this.CamBackBtn = new System.Windows.Forms.Button();
             this.CamLeftBtn = new System.Windows.Forms.Button();
-            this.txtLimB = new System.Windows.Forms.TextBox();
-            this.txtLimA = new System.Windows.Forms.TextBox();
+            this.txtUpperLimit = new System.Windows.Forms.TextBox();
+            this.txtLowerLimit = new System.Windows.Forms.TextBox();
             this.txtSubdiv = new System.Windows.Forms.TextBox();
             this.btnApply = new System.Windows.Forms.Button();
             this.FuncEntryBox = new System.Windows.Forms.TextBox();
@@ -168,24 +168,24 @@
             this.CamLeftBtn.UseVisualStyleBackColor = true;
             this.CamLeftBtn.Click += new System.EventHandler(this.CamLeftBtn_Click);
             // 
-            // txtLimB
+            // txtUpperLimit
             // 
-            this.txtLimB.Location = new System.Drawing.Point(44, 105);
-            this.txtLimB.Name = "txtLimB";
-            this.txtLimB.Size = new System.Drawing.Size(21, 20);
-            this.txtLimB.TabIndex = 4;
-            this.txtLimB.Text = "2";
-            this.txtLimB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtLimB.Enter += new System.EventHandler(this.LimitBoxes_Enter);
+            this.txtUpperLimit.Location = new System.Drawing.Point(44, 105);
+            this.txtUpperLimit.Name = "txtUpperLimit";
+            this.txtUpperLimit.Size = new System.Drawing.Size(21, 20);
+            this.txtUpperLimit.TabIndex = 4;
+            this.txtUpperLimit.Text = "2";
+            this.txtUpperLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtUpperLimit.Enter += new System.EventHandler(this.LimitBoxes_Enter);
             // 
-            // txtLimA
+            // txtLowerLimit
             // 
-            this.txtLimA.Location = new System.Drawing.Point(44, 131);
-            this.txtLimA.Name = "txtLimA";
-            this.txtLimA.Size = new System.Drawing.Size(21, 20);
-            this.txtLimA.TabIndex = 5;
-            this.txtLimA.Text = "-2";
-            this.txtLimA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtLowerLimit.Location = new System.Drawing.Point(44, 131);
+            this.txtLowerLimit.Name = "txtLowerLimit";
+            this.txtLowerLimit.Size = new System.Drawing.Size(21, 20);
+            this.txtLowerLimit.TabIndex = 5;
+            this.txtLowerLimit.Text = "-2";
+            this.txtLowerLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSubdiv
             // 
@@ -230,8 +230,8 @@
             // 
             this.groupBox1.Controls.Add(this.txtSubdiv);
             this.groupBox1.Controls.Add(this.FuncEntryBox);
-            this.groupBox1.Controls.Add(this.txtLimA);
-            this.groupBox1.Controls.Add(this.txtLimB);
+            this.groupBox1.Controls.Add(this.txtLowerLimit);
+            this.groupBox1.Controls.Add(this.txtUpperLimit);
             this.groupBox1.Controls.Add(this.btnApply);
             this.groupBox1.Location = new System.Drawing.Point(15, 12);
             this.groupBox1.Name = "groupBox1";
@@ -271,8 +271,8 @@
         private System.Windows.Forms.Button ToggleModeButton;
         private System.Windows.Forms.Button CamRightBtn;
         private System.Windows.Forms.Button CamResetBtn;
-        private System.Windows.Forms.TextBox txtLimB;
-        private System.Windows.Forms.TextBox txtLimA;
+        private System.Windows.Forms.TextBox txtUpperLimit;
+        private System.Windows.Forms.TextBox txtLowerLimit;
         private System.Windows.Forms.TextBox txtSubdiv;
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.Button CamFwdBtn;

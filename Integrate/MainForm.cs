@@ -29,7 +29,7 @@ namespace Integrate
         // Primary form loading event
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Console.SetOut(new System.IO.StreamWriter("log.txt"));
+            //Console.SetOut(new System.IO.StreamWriter("log.txt"));
         }
 
         // Loading and prepping the GL renderer
@@ -279,6 +279,14 @@ namespace Integrate
             return Error;
         }
 
+        /// <summary>
+        /// Load user variables from form and recalculate the displayed integral
+        /// </summary>
+        private void UpdateIntegral() {
+            // Try and load the values out of the text boxes
+            
+        }
+
         private void btnApply_Click(object sender, EventArgs e)
         {
             /*\
@@ -295,12 +303,12 @@ namespace Integrate
             if (txtSubdiv.Text == "") txtSubdiv.Text = DEFAULT_SUBDIVISONS.ToString();
 
             // Check limit A, limit B and the subdivisions individually, using the same method
-            if (!float.TryParse(txtLimA.Text, out A)) {
+            if (!float.TryParse(txtLowerLimit.Text, out A)) {
                 // Todo: Better error message?
                 ShowError("Limit A is invalid!");
                 goto ERROR;
             }
-            if (!float.TryParse(txtLimB.Text, out B)) {
+            if (!float.TryParse(txtUpperLimit.Text, out B)) {
                 ShowError("Limit B is invalid!");
                 goto ERROR;
             }

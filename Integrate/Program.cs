@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using ExpressionParser;
+
 namespace Integrate
 {
     static class Program
@@ -12,6 +14,10 @@ namespace Integrate
         [STAThread]
         static void Main()
         {
+            Expression ex = new InfixParser().ParseExpression("1 + 2 + 3");
+            
+
+            return;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
