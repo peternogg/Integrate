@@ -42,8 +42,6 @@ namespace ExpressionParser {
 
             // If the match string is empty, then we're at the end of the string
             // And thus the expression
-            // TODO: Evaluate this as a strategy
-            // Do we really want an EndOfExpressionToken? Or do we want to use HasTokens?
             if (String.IsNullOrEmpty(matchAgainst)) {
                 HasTokens = false;
                 _currentToken = new EndOfExpressionToken();
