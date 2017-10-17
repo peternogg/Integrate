@@ -8,20 +8,21 @@ using ExpressionParser;
 using ExpressionParser.Tokens;
 
 namespace ExpressionParserTests {
-    class TestInfixParser {
-
-        public static IEnumerable<TestCaseData> TestEquationsFromFile {
+    public class TestInfixParser {
+        public static IEnumerable<TestCaseData> EquationTestCasesFromFile {
             get {
+                var path = Common.TestCaseLocation + @"\ParserTestEquations.txt";
                 IList<TestCaseData> testCases = new List<TestCaseData>();
-                IList<(string, string[])> lines = Common.LoadTestCasesFrom("ParserTestEquations.txt");
 
                 // Transform lines into a test case
-                foreach (var line in lines) {
+                foreach (var line in Common.LoadTestCasesFrom(path)) {
                     string input = line.Item1; // Input
                     Stack<Token> output = new Stack<Token>();
 
                     foreach (var token in line.Item2)
                         output.Push(Common.CreateTokenOf(token));
+
+                    testCases.Add(new TestCaseData(input, new Expression(output)));
                 }
 
                 foreach (var testCase in testCases)
@@ -30,7 +31,7 @@ namespace ExpressionParserTests {
         }
 
         [Test]
-        public void TestOnePlusOneParsedCorrectly() {
+        public void TestParserParsesOnePlusOneCorrectly() {
             string OnePlusOne = "1 + 1";
             InfixParser parser = new InfixParser();
 
@@ -45,9 +46,15 @@ namespace ExpressionParserTests {
             Assert.IsTrue(Actual == Expected);
         }
 
-        [Test, TestCaseSource("TestEquationsFromFile")]
-        public void TestEquationsParsedCorrectly(string equation, Expression expected) {
+        [Test]
+        [TestCaseSource("EquationTestCasesFromFile")]
+        public void TestParserParsesEquationCorrectly(string equation, Expression Expected) {
+            var parser = new InfixParser();
+            Expression Actual;
 
+            Actual = parser.ParseExpression(equation);
+
+            Assert.IsTrue(Actual == Expected);
         }
     }
 }

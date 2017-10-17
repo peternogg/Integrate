@@ -15,8 +15,6 @@ namespace ExpressionParserTests
         public static IEnumerable<TestCaseData> EquationTestCasesFromFile {
             get {
                 var path = Common.TestCaseLocation + @"\TokenizerTestEquations.txt";
-                var lines = File.ReadAllLines(path);
-
                 List<TestCaseData> testCases = new List<TestCaseData>();
 
                 foreach (var line in Common.LoadTestCasesFrom(path)) {
@@ -36,7 +34,7 @@ namespace ExpressionParserTests
         }
 
         [Test]
-        public void TestOnePlusOneIsParsedCorrectly() {
+        public void TestTokenizerTokenizesOnePlusOneCorrectly() {
             var OnePlusOne = "1 + 1";
             var tokenizer = new InfixTokenizer(OnePlusOne);
 
@@ -120,7 +118,7 @@ namespace ExpressionParserTests
         }
 
         [Test]
-        public void TestOnePlusOnePlusOneIsParsedCorrectly() {
+        public void TestTokenizerTokenizesOnePlusOnePlusOneIsCorrectly() {
             var OnePlusOnePlusOne = "1 + 1 + 1";
             var tokenizer = new InfixTokenizer(OnePlusOnePlusOne);
 

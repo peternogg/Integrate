@@ -37,7 +37,7 @@ namespace ExpressionParserTests {
                     currentLine = caseFile.ReadLine().Trim();
 
                     // Ignore comments
-                    if (!(currentLine.StartsWith("#") && string.IsNullOrWhiteSpace(currentLine))) {
+                    if (!currentLine.StartsWith("#") && !string.IsNullOrWhiteSpace(currentLine)) {
                         string[] splitLine = currentLine.Split(',');
 
                         // Get the parts of splitLine
