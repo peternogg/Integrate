@@ -1,0 +1,12 @@
+﻿# Format: input, reversed stack of output
+# 1 + 1 -> + 1 1, but reversed, for ease of pushing in code
+# This results in push(Number 1), push(Number 1), push(Operator +) 
+# which gives the same stack as above. This file has the same format as TokenizerTestEquations.txt
+1 + 1, Number 1, Number 1, Operator +
+(1) + 1, Number 1, Number 1, Operator +
+1 + 2 + 3, Number 1, Number 2, Operator +, Number 3, Operator +
+(1 + 2) + 3, Number 1, Number 2, Operator +, Number 3, Operator +
+1 + (2 + 3), Number 2, Number 3, Operator +, Number 1, Operator +
+1 * 2 + 3, Number 1, Number 2, Operator *, Number 3, Operator +
+1 * (2 + 3), Number 2, Number 3, Operator +, Number 1, Operator *
+1 * 2 * 3, Number 1, Number 2, Operator *, Number 3, Operator *

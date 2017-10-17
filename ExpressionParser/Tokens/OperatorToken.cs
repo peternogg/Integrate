@@ -10,7 +10,7 @@ namespace ExpressionParser.Tokens {
         public bool LeftAssociative => Text != "^"; // Exponent is the only right associative operator
 
         private static readonly Dictionary<string, int> PrecedenceFor = new Dictionary<string, int> {
-            { "+", 1 },
+            { "+", 1 }, // Fake numbers?
             { "-", 1 },
             { "/", 2 },
             { "*", 2 },

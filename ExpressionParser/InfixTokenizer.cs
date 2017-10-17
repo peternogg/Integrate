@@ -17,10 +17,16 @@ namespace ExpressionParser {
         public bool HasTokens { get; private set; }
 
 
-        private readonly string _numberPattern = @"^[+-]?\d+(\.\d+)?\s*";
+        private readonly string _numberPattern = @"^-?\d+(\.\d+)?\s*"; // Numbers cannot be explicitly positive
         private readonly string _functionPattern = @"(^sin|cos|tan|abs|sqrt)";
         private readonly string _operatorsPattern = @"(^\+|^\-|^\/|^\*|^\^)\s*";
+        private readonly string _rightParenthesisPattern = @"^\)\s*";
+        private readonly string _leftParenthesisPattern = @"^\(\s*";
 
+        /// <summary>
+        /// Create a new tokenizer object
+        /// </summary>
+        /// <param name="infixExpression">A string containing an expression in infix notation</param>
         public InfixTokenizer(string infixExpression) {
             Expression = infixExpression.Trim(); // Tidy up the expression a bit
             HasTokens = true;
@@ -36,8 +42,12 @@ namespace ExpressionParser {
             return _currentToken;
         }
 
+        /// <summary>
+        /// Move the tokenizer to the next token in the stream
+        /// </summary>
         public void MoveNext() {
             Match match;
+            // Try not to take a substring past the end of the string
             String matchAgainst = Expression.Substring(Math.Min(_index, Expression.Length)).Trim();
 
             // If the match string is empty, then we're at the end of the string
@@ -51,15 +61,15 @@ namespace ExpressionParser {
             if (!HasTokens)
                 return;
 
-            if (matchAgainst.StartsWith("(")) {
+            if ((match = Regex.Match(matchAgainst, _leftParenthesisPattern)).Value != string.Empty) {
                 // Found a left paren
                 _currentToken = new LeftParenthesisToken();
-                _index += "(".Length;
+                _index += match.Value.Length;
 
-            } else if (matchAgainst.StartsWith(")")) {
+            } else if ((match = Regex.Match(matchAgainst, _rightParenthesisPattern)).Value != string.Empty) {
                 // Found a right paren
                 _currentToken = new RightParenthesisToken();
-                _index += ")".Length;
+                _index += match.Value.Length;
 
             } else if ((match = Regex.Match(matchAgainst, _numberPattern)).Value != string.Empty) {
                 // Found a number
