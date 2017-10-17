@@ -11,3 +11,4 @@
 1 * 2 + 3, Number 1, Number 2, Operator *, Number 3, Operator +
 1 * (2 + 3), Number 1, Number 2, Number 3, Operator +, Operator *
 1 * 2 * 3, Number 1, Number 2, Operator *, Number 3, Operator *
+88*(4.2-6/7), Number 88, Number 4.2, Number 6, Number 7, Operator /, Operator -, Operator *
