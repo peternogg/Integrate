@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace ExpressionParser {
     using Tokens;
 
-    public class InfixTokenizer {
+    public class RegexTokenizer : ITokenizer
+    {
         private int _index;
         private Token _currentToken;
 
@@ -27,7 +28,7 @@ namespace ExpressionParser {
         /// Create a new tokenizer object
         /// </summary>
         /// <param name="infixExpression">A string containing an expression in infix notation</param>
-        public InfixTokenizer(string infixExpression) {
+        public RegexTokenizer(string infixExpression) {
             Expression = infixExpression.Trim(); // Tidy up the expression a bit
             HasTokens = true;
         }

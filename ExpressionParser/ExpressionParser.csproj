@@ -43,7 +43,9 @@
     <Compile Include="Expression.cs" />
     <Compile Include="InfixParser.cs" />
     <Compile Include="IParser.cs" />
-    <Compile Include="InfixTokenizer.cs" />
+    <Compile Include="IterativeTokenizer.cs" />
+    <Compile Include="ITokenizer.cs" />
+    <Compile Include="RegexTokenizer.cs" />
     <Compile Include="Tokens\EndOfExpressionToken.cs" />
     <Compile Include="Tokens\FunctionToken.cs" />
     <Compile Include="Tokens\InvalidToken.cs" />

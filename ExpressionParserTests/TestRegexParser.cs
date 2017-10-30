@@ -8,7 +8,7 @@ using ExpressionParser;
 using ExpressionParser.Tokens;
 
 namespace ExpressionParserTests {
-    public class TestInfixParser {
+    public class TestRegexParser {
         public static IEnumerable<TestCaseData> EquationTestCasesFromFile {
             get {
                 var path = Common.TestCaseLocation + @"\ParserTestEquations.txt";

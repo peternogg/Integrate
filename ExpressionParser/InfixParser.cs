@@ -9,7 +9,7 @@ namespace ExpressionParser {
             // First: Tokenize the entire string
             var output = new Queue<Token>();
             var operators = new Stack<Token>();
-            InfixTokenizer tokenizer = new InfixTokenizer(infixExpression);
+            RegexTokenizer tokenizer = new RegexTokenizer(infixExpression);
             Token currentToken;
 
             while (tokenizer.HasTokens) {
