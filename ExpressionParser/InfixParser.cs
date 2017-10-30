@@ -45,9 +45,11 @@ namespace ExpressionParser {
 
         private void HandleOperator(OperatorToken currentToken, Queue<Token> output, Stack<Token> operators) {
             if (operators.Count > 0) {
-                OperatorToken operatorsTop = (OperatorToken)operators.Peek();
+                Token operatorTop = operators.Peek();
 
-                while (operators.Count > 0 && operatorsTop.LeftAssociative && operatorsTop.Precedence >= currentToken.Precedence) {
+                // Looooooong conditonal
+                while (operatorTop is OperatorToken && operators.Count > 0 && ((OperatorToken)operatorTop).LeftAssociative && ((OperatorToken)operatorTop).Precedence >= currentToken.Precedence) {
+                    operatorTop = operators.Peek();
                     output.Enqueue(operators.Pop());
                 }
             }
