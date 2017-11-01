@@ -1,9 +1,9 @@
 ﻿# Format: input equation, Tokens that make up the equation, comma separated, with optional argument
-1 + 1, Number 1, Operator +, Number 1
-(1) + 1, LeftParenthesis, Number 1, RightParenthesis, Operator +, Number 1
-(1 + 1 * 0.0005) - 34, LeftParenthesis, Number 1, Operator +, Number 1, Operator *, Number 0.0005, RightParenthesis, Operator -, Number 34
--0.0011 + 12, Number -0.0011, Operator +, Number 12
-88*(4.2-6/7), Number 88, Operator *, LeftParenthesis, Number 4.2, Operator -, Number 6, Operator /, Number 7, RightParenthesis
-8 - -6, Number 8, Operator -, Number -6
-8-6, Number 8, Operator -, Number 6
-8--6, Number 8, Operator -, Number -6
+1 + 1, Number 1, Operator +, Number 1, EndOfExpression
+(1) + 1, LeftParenthesis, Number 1, RightParenthesis, Operator +, Number 1, EndOfExpression
+(1 + 1 * 0.0005) - 34, LeftParenthesis, Number 1, Operator +, Number 1, Operator *, Number 0.0005, RightParenthesis, Operator -, Number 34, EndOfExpression
+-0.0011 + 12, Number -0.0011, Operator +, Number 12, EndOfExpression
+88*(4.2-6/7), Number 88, Operator *, LeftParenthesis, Number 4.2, Operator -, Number 6, Operator /, Number 7, RightParenthesis, EndOfExpression
+8 - -6, Number 8, Operator -, Number -6, EndOfExpression
+8-6, Number 8, Operator -, Number 6, EndOfExpression
+8--6, Number 8, Operator -, Number -6, EndOfExpression

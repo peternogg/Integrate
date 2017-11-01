@@ -20,6 +20,11 @@ namespace ExpressionParser {
             return this.Text == (obj as Token).Text;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         /// <summary>
         /// Two tokens are equal when the text they represent are equal
         /// </summary>

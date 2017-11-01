@@ -43,7 +43,7 @@ namespace ExpressionParserTests
                 new NumberToken("1"),
                 new OperatorToken("+"),
                 new NumberToken("1"),
-                //new EndOfExpressionToken()
+                new EndOfExpressionToken()
             };
 
             while (tokenizer.HasTokens)
@@ -54,11 +54,12 @@ namespace ExpressionParserTests
 
         [Test]
         public void TestTokenizerRecognizesNumbers() {
-            var Numbers = "1 1.1 -1 1 2 3 -2 -3 1.000101 432515335151";
+            var Numbers = "1 1.1 1 1 2 3 1.000101 432515335151";
             var tokenizer = new RegexTokenizer(Numbers);
 
             List<Token> Actual = new List<Token>();
             List<Token> Expected = Numbers.Split(' ').Select(number => new NumberToken(number)).ToList<Token>();
+            Expected.Add(new EndOfExpressionToken());
 
             while (tokenizer.HasTokens)
                 Actual.Add(tokenizer.ConsumeToken());
@@ -75,13 +76,16 @@ namespace ExpressionParserTests
 
             List<Token> Actual = new List<Token>();
             List<Token> Expected = new List<Token>() {
-                new NumberToken("1"), 
+                new NumberToken("1"),
                 new OperatorToken("+"),
                 new NumberToken("1"),
-                new NumberToken("-1"),
+                new OperatorToken("-"),
+                new NumberToken("1"),
                 new OperatorToken("+"),
                 new NumberToken("1.0"),
-                new NumberToken("-1.0")
+                new OperatorToken("-"),
+                new NumberToken("1.0"),
+                new EndOfExpressionToken()
             };
 
             while (tokenizer.HasTokens)
@@ -108,7 +112,8 @@ namespace ExpressionParserTests
                 new OperatorToken("/"),
                 new NumberToken("4"),
                 new OperatorToken("-"),
-                new NumberToken("5")
+                new NumberToken("5"),
+                new EndOfExpressionToken()
             };
 
             while (tokenizer.HasTokens)
@@ -128,7 +133,8 @@ namespace ExpressionParserTests
                 new OperatorToken("+"),
                 new NumberToken("1"),
                 new OperatorToken("+"),
-                new NumberToken("1")
+                new NumberToken("1"),
+                new EndOfExpressionToken()
             };
 
             while (tokenizer.HasTokens)
@@ -148,7 +154,8 @@ namespace ExpressionParserTests
                 new OperatorToken("-"),
                 new OperatorToken("/"),
                 new OperatorToken("*"),
-                new OperatorToken("^")
+                new OperatorToken("^"),
+                new EndOfExpressionToken()
             };
 
             while (tokenizer.HasTokens)
@@ -171,7 +178,8 @@ namespace ExpressionParserTests
                 new LeftParenthesisToken(),
                 new LeftParenthesisToken(),
                 new RightParenthesisToken(),
-                new RightParenthesisToken()
+                new RightParenthesisToken(),
+                new EndOfExpressionToken()
             };
 
             while (tokenizer.HasTokens)

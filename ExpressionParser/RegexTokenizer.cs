@@ -68,16 +68,11 @@ namespace ExpressionParser {
                 return;
             
             string target = Expression.Substring(Math.Min(_index, Expression.Length)).Trim();
-            var nextToken = FindNextToken(target);
-
-            if (nextToken == null)
+            CurrentToken = FindNextToken(target);
+            
+            if (CurrentToken is InvalidToken || CurrentToken is EndOfExpressionToken)
             {
-                CurrentToken = new EndOfExpressionToken();
                 HasTokens = false;
-            }
-            else
-            {
-                CurrentToken = nextToken;
             }
         }
 
@@ -109,7 +104,7 @@ namespace ExpressionParser {
                 // There's ambiguity when the expression contains number MINUS number. If the previous
                 // token WASN'T a number, and this match starts with a negative, then it's a number.
                 // Otherwise, we'll let it be an operator
-                if (!(match.Value.StartsWith("-") && _previousToken is NumberToken))
+                if (!(match.Value.StartsWith("-") && CurrentToken is NumberToken))
                 {
                     // Found a number
                     _index += match.Value.Length;

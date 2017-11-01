@@ -31,6 +31,16 @@ namespace ExpressionParser {
             return builder.ToString();
         }
 
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public static bool operator==(Expression left, Expression right) {
             // The expressions are not equal if they are of different lengths
             if (left._tokenStack.Count != right._tokenStack.Count)

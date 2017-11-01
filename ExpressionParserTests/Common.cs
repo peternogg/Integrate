@@ -18,6 +18,7 @@ namespace ExpressionParserTests {
             { "Function", typeof(FunctionToken) },
             { "LeftParenthesis", typeof(LeftParenthesisToken) },
             { "RightParenthesis", typeof(RightParenthesisToken) },
+            { "EndOfExpression", typeof(EndOfExpressionToken) }
         };
 
         public static readonly string TestCaseLocation 

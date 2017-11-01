@@ -44,6 +44,7 @@ namespace ExpressionParserTests {
             Expression Actual = parser.ParseExpression(OnePlusOne);
 
             Assert.IsTrue(Actual == Expected);
+            //Assert.AreEqual(Expected, Actual);
         }
 
         [Test, TestCaseSource(nameof(EquationTestCasesFromFile))]
@@ -53,7 +54,7 @@ namespace ExpressionParserTests {
 
             Actual = parser.ParseExpression(equation);
 
-            Assert.IsTrue(Actual == Expected);
+            Assert.IsTrue(Expected == Actual);
         }
     }
 }

@@ -44,7 +44,7 @@
             this.txtSubdiv = new System.Windows.Forms.TextBox();
             this.btnApply = new System.Windows.Forms.Button();
             this.FuncEntryBox = new System.Windows.Forms.TextBox();
-            //this.Viewport = new AAGLControlLib.AAGLControl();
+            this.Viewport = new AAGLControlLib.AAGLControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CamControlBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -216,15 +216,15 @@
             // 
             // Viewport
             // 
-//            this.Viewport.BackColor = System.Drawing.Color.Black;
-//            this.Viewport.Location = new System.Drawing.Point(239, 12);
-//            this.Viewport.Name = "Viewport";
-//            this.Viewport.Size = new System.Drawing.Size(563, 424);
-//            this.Viewport.TabIndex = 0;
-//            this.Viewport.VSync = true;
-//            this.Viewport.Load += new System.EventHandler(this.Viewport_Load);
-//            this.Viewport.Paint += new System.Windows.Forms.PaintEventHandler(this.Viewport_Paint);
-//            this.Viewport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Viewport_KeyPress);
+            this.Viewport.BackColor = System.Drawing.Color.Black;
+            this.Viewport.Location = new System.Drawing.Point(239, 12);
+            this.Viewport.Name = "Viewport";
+            this.Viewport.Size = new System.Drawing.Size(563, 424);
+            this.Viewport.TabIndex = 0;
+            this.Viewport.VSync = true;
+            this.Viewport.Load += new System.EventHandler(this.Viewport_Load);
+            this.Viewport.Paint += new System.Windows.Forms.PaintEventHandler(this.Viewport_Paint);
+            this.Viewport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Viewport_KeyPress);
             // 
             // groupBox1
             // 
@@ -247,7 +247,7 @@
             this.ClientSize = new System.Drawing.Size(1043, 453);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.CamControlBox);
-            //this.Controls.Add(this.Viewport);
+            this.Controls.Add(this.Viewport);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
@@ -263,7 +263,7 @@
 
         #endregion
 
-        //private AAGLControlLib.AAGLControl Viewport;
+        private AAGLControlLib.AAGLControl Viewport;
         private System.Windows.Forms.GroupBox CamControlBox;
         private System.Windows.Forms.Button CamLeftBtn;
         private System.Windows.Forms.Button CamUpBtn;
