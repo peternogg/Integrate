@@ -8,8 +8,10 @@ namespace ExpressionParser.Tokens {
     public class NumberToken : Token {
         public double Value { get; private set; }
 
-        public NumberToken(string Text) : base(Text) {
-            if (!double.TryParse(Text, out double result))
+        public NumberToken(string Text) : base(Text)
+        {
+            double result;
+            if (!double.TryParse(Text, out result))
                 throw new ArgumentException("Invalid number " + Text);
             else {
                 this.Value = result;

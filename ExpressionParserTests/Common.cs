@@ -20,15 +20,16 @@ namespace ExpressionParserTests {
             { "RightParenthesis", typeof(RightParenthesisToken) },
         };
 
-        public static string TestCaseLocation = TestContext.CurrentContext.TestDirectory + @"\..\..\Test Cases\";
+        public static readonly string TestCaseLocation 
+            = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "Test Cases";
 
         /// <summary>
         /// Load a test case file with cases on separate lines, formatted as input, token 1, token 2, token 3...
         /// </summary>
         /// <param name="filename">The name of the file to load. Doesn't need to contain the path</param>
         /// <returns>A list of lines split into parts on commas. The parts are not trimmed.</returns>
-        public static IList<(string, string[])> LoadTestCasesFrom(string filename) {
-            var processedLines = new List<(string, string[])>();
+        public static IList<Tuple<string, string[]>> LoadTestCasesFrom(string filename) {
+            var processedLines = new List<Tuple<string, string[]>>();
 
             using (StreamReader caseFile = new StreamReader(filename)) {
                 string currentLine;
@@ -50,7 +51,7 @@ namespace ExpressionParserTests {
                         for (int i = 1; i < splitLine.Length; i++)
                             tokens[i - 1] = splitLine[i];
 
-                        processedLines.Add((inputPart, tokens));
+                        processedLines.Add(new Tuple<string, string[]>(inputPart, tokens));
                     }
                 }
             }

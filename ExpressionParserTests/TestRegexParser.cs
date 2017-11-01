@@ -11,7 +11,7 @@ namespace ExpressionParserTests {
     public class TestRegexParser {
         public static IEnumerable<TestCaseData> EquationTestCasesFromFile {
             get {
-                var path = Common.TestCaseLocation + @"\ParserTestEquations.txt";
+                var path = Common.TestCaseLocation + Path.DirectorySeparatorChar + "ParserTestEquations.txt";
                 IList<TestCaseData> testCases = new List<TestCaseData>();
 
                 // Transform lines into a test case
@@ -46,8 +46,7 @@ namespace ExpressionParserTests {
             Assert.IsTrue(Actual == Expected);
         }
 
-        [Test]
-        [TestCaseSource("EquationTestCasesFromFile")]
+        [Test, TestCaseSource(nameof(EquationTestCasesFromFile))]
         public void TestParserParsesEquationCorrectly(string equation, Expression Expected) {
             var parser = new InfixParser();
             Expression Actual;

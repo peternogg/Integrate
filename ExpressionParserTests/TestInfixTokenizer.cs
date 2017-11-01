@@ -14,7 +14,7 @@ namespace ExpressionParserTests
     {
         public static IEnumerable<TestCaseData> EquationTestCasesFromFile {
             get {
-                var path = Common.TestCaseLocation + @"\TokenizerTestEquations.txt";
+                var path = Common.TestCaseLocation + Path.DirectorySeparatorChar + "TokenizerTestEquations.txt";
                 List<TestCaseData> testCases = new List<TestCaseData>();
 
                 foreach (var line in Common.LoadTestCasesFrom(path)) {
@@ -180,7 +180,7 @@ namespace ExpressionParserTests
             Assert.That(Actual, Is.EquivalentTo(Expected));
         }
 
-        [Test, TestCaseSource("EquationTestCasesFromFile")]
+        [Test, TestCaseSource(nameof(EquationTestCasesFromFile))]
         public void TestTokenizerCorrectlyTokenizesRegularEquations(string Input, List<Token> Expected) {
             var Actual = new List<Token>();
             var tokenizer = new RegexTokenizer(Input);

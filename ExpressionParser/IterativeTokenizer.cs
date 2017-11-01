@@ -8,11 +8,16 @@ namespace ExpressionParser
 {
     public class IterativeTokenizer : ITokenizer
     {
-        public Token CurrentToken => throw new NotImplementedException();
+        public Token CurrentToken { get; protected set; }
 
-        public string Expression => throw new NotImplementedException();
+        public string Expression { get; protected set; }
 
-        public bool HasTokens => throw new NotImplementedException();
+        public bool HasTokens { get; protected set; }
+
+        public IterativeTokenizer(string expression)
+        {
+            Expression = expression;
+        }
 
         public Token ConsumeToken()
         {

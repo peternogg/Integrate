@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -11,10 +13,24 @@ namespace ExpressionParser {
     public class RegexTokenizer : ITokenizer
     {
         private int _index;
-        private Token _currentToken;
+        private Token _currentToken = null;
+        private Token _previousToken = null;
 
         public string Expression { get; private set; }
-        public Token CurrentToken { get { return _currentToken; } }
+
+        public Token CurrentToken
+        {
+            get
+            {
+                return _currentToken;
+            }
+            private set
+            {
+                _previousToken = _currentToken;
+                _currentToken = value;
+            }
+        }
+
         public bool HasTokens { get; private set; }
 
 
@@ -47,58 +63,75 @@ namespace ExpressionParser {
         /// Move the tokenizer to the next token in the stream
         /// </summary>
         public void MoveNext() {
-            Match match;
-            // Try not to take a substring past the end of the string
-            String matchAgainst = Expression.Substring(Math.Min(_index, Expression.Length)).Trim();
-
-            // If the match string is empty, then we're at the end of the string
-            // And thus the expression
-            if (String.IsNullOrEmpty(matchAgainst)) {
-                HasTokens = false;
-                _currentToken = new EndOfExpressionToken();
-            }
-
-            // If there's no tokens left, don't move
+            // Continue only if we think there might still be tokens
             if (!HasTokens)
                 return;
+            
+            string target = Expression.Substring(Math.Min(_index, Expression.Length)).Trim();
+            var nextToken = FindNextToken(target);
 
-            if ((match = Regex.Match(matchAgainst, _leftParenthesisPattern)).Value != string.Empty) {
+            if (nextToken == null)
+            {
+                CurrentToken = new EndOfExpressionToken();
+                HasTokens = false;
+            }
+            else
+            {
+                CurrentToken = nextToken;
+            }
+        }
+
+        private Token FindNextToken(string target)
+        {
+            Match match;
+            
+            // If the match string is empty, then we're at the end of the string
+            // And thus the expression
+            if (string.IsNullOrEmpty(target))
+            {
+                return new EndOfExpressionToken();
+            }
+            
+            if ((match = Regex.Match(target, _leftParenthesisPattern)).Value != string.Empty) {
                 // Found a left paren
-                _currentToken = new LeftParenthesisToken();
                 _index += match.Value.Length;
-
-            } else if ((match = Regex.Match(matchAgainst, _rightParenthesisPattern)).Value != string.Empty) {
+                return new LeftParenthesisToken();
+            }
+            
+            if ((match = Regex.Match(target, _rightParenthesisPattern)).Value != string.Empty) {
                 // Found a right paren
-                _currentToken = new RightParenthesisToken();
                 _index += match.Value.Length;
-
-            } else if ((match = Regex.Match(matchAgainst, _numberPattern)).Value != string.Empty) {
-                // Found a number
-                _currentToken = new NumberToken(match.Value);
-                _index += match.Value.Length;
-
-            } else if ((match = Regex.Match(matchAgainst, _operatorsPattern)).Value != string.Empty) {
+                return new RightParenthesisToken();
+            }
+            
+            if ((match = Regex.Match(target, _numberPattern)).Value != string.Empty) {
+                // The tokenizer sometimes grabs minus operators as part of a number when it's wrong
+                // There's ambiguity when the expression contains number MINUS number. If the previous
+                // token WASN'T a number, and this match starts with a negative, then it's a number.
+                // Otherwise, we'll let it be an operator
+                if (!(match.Value.StartsWith("-") && _previousToken is NumberToken))
+                {
+                    // Found a number
+                    _index += match.Value.Length;
+                    return new NumberToken(match.Value);
+                }
+                // If we don't enter the above if block, then the next thing that it should match is the operator
+            }
+            
+            if ((match = Regex.Match(target, _operatorsPattern)).Value != string.Empty) {
                 // Found an operator
-                _currentToken = new OperatorToken(match.Value);
                 _index += match.Value.Length;
-
-            } else if ((match = Regex.Match(matchAgainst, _functionPattern)).Value != string.Empty) {
+                return new OperatorToken(match.Value);
+            }
+            
+            if ((match = Regex.Match(target, _functionPattern)).Value != string.Empty) {
                 // Found a function
-                _currentToken = new FunctionToken(match.Value);
                 _index += match.Value.Length;
-
-            } else {
-                // Found something we don't know about
-                // Just quit
-                HasTokens = false;
-                _currentToken = new InvalidToken();
+                return new FunctionToken(match.Value);
             }
-
-            // Check if we've consumed all the tokens available in the expression
-            if (_index == Expression.Length) {
-                HasTokens = false;
-                // On the next pass, _currentToken will be set to EndOfExpressionToken
-            }
+            
+            // We probably shouldn't be down here
+            return new InvalidToken();
         }
     }
 }
